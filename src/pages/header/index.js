@@ -9,16 +9,17 @@ import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
-import Person from "@mui/icons-material/Person";
 import SpaIcon from "@mui/icons-material/Spa";
 import DeckIcon from "@mui/icons-material/Deck";
 import ComputerIcon from "@mui/icons-material/Computer";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import DiamondIcon from "@mui/icons-material/Diamond";
-import RadioIcon from "@mui/icons-material/Radio";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import AloeLogo from "../../../public/logo-1.JPG";
+import Image from "next/image";
 import MoreIcon from "@mui/icons-material/More";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 import {
   Typography,
   Divider,
@@ -100,8 +101,8 @@ function Index() {
               <div className={styles.menuIcon}>
                 <MenuIcon onClick={() => setOpenMenu(true)} />
               </div>
-              <div className={styles.name}>
-                <h1>COD STORE</h1>
+              <div className={styles.containerLogo}>
+                <Image src={AloeLogo} alt="Aloe-Logo" className={styles.img} />
               </div>
 
               <div className={styles.searchContainer}>
@@ -144,6 +145,45 @@ function Index() {
               </Tooltip>
             </div>
           </div>
+
+          {openMenu && (
+            <>
+              <div className={styles.menuContainer}>
+                <div className={styles.menuHeader}>
+                  <h1>Categories</h1>
+                  <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
+                </div>
+
+                <div className={styles.menuNavigations}>
+                  <div className={styles.link}>
+                    <SpaIcon className={styles.linkIcon} />
+                    <Link href="">Health & Beauty</Link>
+                  </div>
+
+
+                  <div className={styles.link}>
+                    <ComputerIcon className={styles.linkIcon} />
+                    <Link href="">Computing</Link>
+                  </div>
+
+                  <div className={styles.link}>
+                    <FoodBankIcon className={styles.linkIcon} />
+                    <Link href="">Supermarket</Link>
+                  </div>
+
+                  <div className={styles.link}>
+                    <SpaIcon className={styles.linkIcon} />
+                    <Link href="">Health & Beauty</Link>
+                  </div>
+
+                  <div className={styles.link}>
+                    <ComputerIcon className={styles.linkIcon} />
+                    <Link href="">Computing</Link>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -273,74 +313,6 @@ function Index() {
           </Box>
         </Box>
       </Modal>
-
-      {openMenu && (
-        <>
-          <div className={styles.menuContainer}>
-            <div className={styles.menuHeader}>
-              <h1>Categories</h1>
-              <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
-            </div>
-
-            <div className={styles.menuNavigation}>
-              <div className={styles.menuNav}>
-                <FoodBankIcon className={styles.catIcon} />
-                <h1>Supermarket</h1>
-              </div>
-
-              <div className={styles.menuNav}>
-                <FitnessCenterIcon className={styles.catIcon} />
-                <h1>Sporting Goods</h1>
-              </div>
-
-              <div className={styles.menuNav}>
-                <MoreIcon className={styles.catIcon} />
-                <h1>Other Categories</h1>
-              </div>
-
-              <div className={styles.menuNav}>
-                <DiamondIcon className={styles.catIcon} />
-                <h1>Fashion</h1>
-              </div>
-
-              <div className={styles.menuNav}>
-                <ComputerIcon className={styles.catIcon} />
-                <h1>Computing</h1>
-              </div>
-
-              <div className={styles.menuNav}>
-                <DeckIcon className={styles.catIcon} />
-                <h1>Home & Office</h1>
-              </div>
-              <div className={styles.menuNav}>
-                <SpaIcon className={styles.catIcon} />
-                <h1>Health & Beauty</h1>
-              </div>
-            </div>
-
-            <div className={styles.actionContainer}>
-             
-
-               
-
-                <div className={styles.link} onClick={handleNotificationsClick}>
-                  <NotificationsIcon className={styles.icon} />
-                  <h1>Notifications</h1>
-                </div>
-
-                <div className={styles.link}>
-                  <PhoneIcon className={styles.icon} />
-                  <h1>Contact</h1>
-                </div>
-
-                <div className={styles.link}>
-                  <PersonIcon className={styles.icon} />
-                  <h1>Me</h1>
-                </div>
-            </div>
-          </div>
-        </>
-      )}
     </>
   );
 }

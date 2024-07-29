@@ -3,33 +3,19 @@ import Head from "next/head";
 import styles from "../../styles/create.module.css";
 import VisibilityOffOutlined from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
 import { useRouter } from "next/router";
+import Link from 'next/link'
+import LogoInLogo from "../../../public/logo-1.JPG";
+import Image from "next/image";
 
-function LoginForm() {
+function CreateForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [progress, setProgress] = useState(0);
   const router = useRouter();
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   const [userCredentials, setUserCredentials] = useState({
     email: "",
@@ -53,7 +39,6 @@ function LoginForm() {
     let data = {
       email: userCredentials.email,
       password: userCredentials.password,
-      displayName: userCredentials.name,
     };
 
     try {
@@ -87,21 +72,24 @@ function LoginForm() {
       {isSubmitting && (
         <>
           <div className={styles.loadingContainer}>
-            <Box sx={{ width: "70%" }}>
-              <LinearProgress variant="determinate" value={progress} />
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
             </Box>
           </div>
         </>
       )}
       <Head>
-        <title>Create Your Account</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Aloe Health Products | Create Account</title>
+        <link rel="icon" href="/logo-1.JPG" />
       </Head>
 
       <div className={styles.authContainer}>
         <div className={styles.authItems}>
+          <div className={styles.logoContainer}>
+            <Image src={LogoInLogo} alt="logo-" className={styles.logo} />
+          </div>
           <div className={styles.authLogin}>
-            <h2>Create your account</h2>
+            <h2>Please create your account</h2>
           </div>
 
           <div className={styles.authForm}>
@@ -141,28 +129,15 @@ function LoginForm() {
                 )}
               </div>
 
-
-              <div className={styles.authFormInput}>
-                <label>Display Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={userCredentials.name}
-                  onChange={handleInputChange}
-                />
+              <div className={styles.authForgetPassword}>
+                <Link href="/login">Sign In</Link>
               </div>
 
               <button type="submit" className={styles.loginButton}>
-                Create Account
+                Create
               </button>
             </form>
           </div>
-        </div>
-        <div className={styles.footerContainer}>
-          <p>
-            &copy;{new Date().getFullYear()} - COD SHOP | All Rights Reserved
-          </p>
         </div>
       </div>
       <ToastContainer />
@@ -170,4 +145,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default CreateForm;

@@ -5,7 +5,7 @@ import { updateProfile } from "firebase/auth";
 
 export default withSession(async function handler(req, res) {
   if (req.method === "POST") {
-    const { email, password, name, phoneNumber } = req.body;
+    const { email, password, } = req.body;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -14,16 +14,12 @@ export default withSession(async function handler(req, res) {
         password
       );
 
-      // Update user profile with display name
-      await updateProfile(userCredential.user, { displayName: name });
 
       const user = {
         id: userCredential.user.uid,
         email: userCredential.user.email,
-        displayName: name, // Use the provided name
       };
 
-      // Store user data in the session
       req.session.set("user", user);
       await req.session.save();
 

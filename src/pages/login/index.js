@@ -6,37 +6,24 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../../../firebase.config";
+import LogoInLogo from "../../../public/logo-1.JPG";
+import Image from "next/image";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [progress, setProgress] = useState(0);
   const router = useRouter();
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,6 +71,7 @@ function LoginForm() {
   const resetPassword = async () => {
     if (!userCredentials.email) {
       toast.error("Please enter your email address");
+      return;
     }
     try {
       await sendPasswordResetEmail(auth, userCredentials.email);
@@ -105,12 +93,15 @@ function LoginForm() {
         </>
       )}
       <Head>
-        <title>Please Sign In</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Aloe Health Products | Sign In</title>
+        <link rel="icon" href="/logo-1.JPG" />
       </Head>
 
       <div className={styles.authContainer}>
         <div className={styles.authItems}>
+          <div className={styles.logoContainer}>
+            <Image src={LogoInLogo} alt="logo-" className={styles.logo} />
+          </div>
           <div className={styles.authLogin}>
             <h2>Login to your account</h2>
           </div>
@@ -154,6 +145,7 @@ function LoginForm() {
 
               <div className={styles.authForgetPassword}>
                 <a onClick={resetPassword}>Forget Password</a>
+                <Link href="/create">Create Account</Link>
               </div>
 
               <button type="submit" className={styles.loginButton}>
@@ -162,7 +154,6 @@ function LoginForm() {
             </form>
           </div>
         </div>
-      
       </div>
       <ToastContainer />
     </>

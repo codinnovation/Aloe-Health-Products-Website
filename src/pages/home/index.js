@@ -177,13 +177,13 @@ function Index() {
           <div className={styles.mainContainer}>
             <div className={styles.productContainer}>
               <div className={styles.productHeader}>
-                <h1>Jordan 9 Retro</h1>
+                <h1>Forever Aloe Vera Gel</h1>
                 <CartIcon className={styles.CartIcon} onClick={handleOpen} />
               </div>
 
               <div className={styles.productImage}>
                 <Image
-                  src="/jordan.jpg"
+                  src="/715.jpg"
                   alt="product-image"
                   className={styles.image}
                   width={900}
@@ -197,22 +197,21 @@ function Index() {
                   <h1>Ghc 260.00</h1>
                 </div>
 
-                <div className={styles.description}>
-                  <h1>Description:</h1>
-                  <h1>41, 54, 23, 56, 76</h1>
+                <div className={styles.readMore}>
+                  <button>Read More</button>
                 </div>
               </div>
             </div>
 
             <div className={styles.productContainer}>
               <div className={styles.productHeader}>
-                <h1>Lenovo ThinkPad</h1>
-                <CartIcon className={styles.CartIcon} onClick={handleOpen}/>
+                <h1>Aloe Vera For All Skin Types</h1>
+                <CartIcon className={styles.CartIcon} onClick={handleOpen} />
               </div>
 
               <div className={styles.productImage}>
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/cod-shop-c1874.appspot.com/o/fridge.jpg?alt=media&token=3f4eabb5-a3a0-4d7e-a1cb-a77a3627d3cd"
+                  src="/90.jpeg"
                   alt="product-image"
                   className={styles.image}
                   width={900}
@@ -226,22 +225,21 @@ function Index() {
                   <h1>Ghc 260.00</h1>
                 </div>
 
-                <div className={styles.description}>
-                  <h1>Description:</h1>
-                  <h1>i7-8650U, 16GB RAM, 500GB SSD, </h1>
+                <div className={styles.readMore}>
+                  <button>Read More</button>
                 </div>
               </div>
             </div>
 
             <div className={styles.productContainer}>
               <div className={styles.productHeader}>
-                <h1>Bronze Tone Lotion - 300ml</h1>
-                <CartIcon className={styles.CartIcon} onClick={handleOpen}/>
+                <h1>Organic Aloe Vera Gel </h1>
+                <CartIcon className={styles.CartIcon} onClick={handleOpen} />
               </div>
 
               <div className={styles.productImage}>
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/cod-shop-c1874.appspot.com/o/Bronze-Maxi-Tone-Lotion-200ml.png?alt=media&token=28cbe6ad-c69b-4b8e-9d38-0f7e2df9295a"
+                  src="/80.jpg"
                   alt="product-image"
                   className={styles.image}
                   width={900}
@@ -252,31 +250,25 @@ function Index() {
               <div className={styles.productDescription}>
                 <div className={styles.description}>
                   <h1>Price:</h1>
-                  <h1>Ghc 30.00</h1>
+                  <h1>Ghc 260.00</h1>
                 </div>
 
-                <div className={styles.description}>
-                  <h1>Description:</h1>
-                  <h1>Bronze Tone Lotion - 300ml</h1>
+                <div className={styles.readMore}>
+                  <button>Read More</button>
                 </div>
               </div>
             </div>
-            <div className={styles.item}></div>
           </div>
           <div className={styles.profileContainer}>
             <div className={styles.profilePhoto}>
               <Person className={styles.photo} />
             </div>
             <div className={styles.profileName}>
-              <h1>Kwabena Sakyi Asumadu</h1>
+              <h1>Welcome To Aloe Health Products</h1>
             </div>
 
             <div className={styles.profileEmail}>
               <h1>{user?.user.email}</h1>
-            </div>
-
-            <div className={styles.profileCountry}>
-              <h1>{user?.user.phoneNumber}</h1>
             </div>
 
             <div className={styles.signOut} onClick={handleLogout}>

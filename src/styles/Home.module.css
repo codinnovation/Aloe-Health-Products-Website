@@ -37,22 +37,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .profileName h1 {
   font-family: sans-serif;
-  font-size: 1em;
+  font-size: 0.9em;
+  text-align: center;
+  color: green;
+  font-weight: 800;
 }
 
 .profileEmail {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .profileEmail h1 {
-  font-size: 1em;
+  font-size: 0.9em;
   font-family: sans-serif;
   font-weight: 200;
 }
@@ -116,6 +121,7 @@
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+  padding: 5px;
 }
 
 
@@ -130,7 +136,7 @@
   font-size: 1.4em;
   font-family: sans-serif;
   margin-top: 5px;
-  color: #008374;
+  color: green;
 }
 
 .productHeader .CartIcon {
@@ -162,17 +168,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .productDescription .description h1:nth-child(1) {
   font-weight: 900;
   font-size: 1.2em;
-  margin-right: 10px;
 }
 
 .productDescription .description h1:nth-child(2) {
   font-weight: 400;
   font-size: 1em;
+  color: red;
+}
+
+.readMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.readMore button {
+  width: 100%;
+  height: 40px;
+  background-color: green;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .categoriesContainer {
@@ -243,6 +267,19 @@
     font-size: 1.2em;
   }
 
+  .mainContainer{
+    height: 100vh;
+    margin-top: 0%;
+  }
+
+  .mainContainer .productContainer {
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 5px;
+  }
+  
+
   .productImage {
     width: 90%;
   }
@@ -262,6 +299,7 @@
     font-size: 1em;
     text-align: left;
   }
+
   .productDescription .description h1:nth-child(2) {
     font-weight: 300;
     font-size: 1em;

@@ -10,13 +10,25 @@
 .authItems {
    width: 30%;
    height: 100%;
-   box-shadow: 0px 0px 20px #0f3834;
-   margin-top: 10%;
+   box-shadow: 0px 0px 2px;
+   margin-top: 0%;
    border-radius: 20px;
 }
 
+.logoContainer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 5%;
+}
+
+.logoContainer .logo {
+   height: auto;
+   width: 20%;
+}
+
 .authLogin {
-   margin: 10% auto;
+   margin: 1% auto;
    width: 50%;
 }
 
@@ -27,14 +39,8 @@
 }
 
 .authForm {
-   width: 80%;
+   width: 50%;
    margin: 7% auto;
-}
-
-.authForm form{
-   display: grid;
-   grid-template-columns: 1fr;
-   gap: 20px;
 }
 
 .authFormInput {
@@ -46,12 +52,14 @@
 }
 
 .authFormInput label {
-   color: #230035;
+   color: green;
    font-size: 18px;
    font-family: serif;
+   font-weight: 700;
 }
 
-.authFormInput input, .authFormInput select {
+.authFormInput input,
+.authFormInput select {
    width: 100%;
    height: 45px;
    border-radius: 5px;
@@ -63,10 +71,6 @@
    font-weight: 600;
    letter-spacing: 0.5px;
    transition: 0.2s ease-in-out;
-}
-
-.authFormInput input:active {
-   transform: scaleX(1.1);
 }
 
 .authFormInput .visibilityIcon {
@@ -82,7 +86,8 @@
    font-family: serif;
    font-size: 18px;
 }
-.authForgetPassword .link{
+
+.authForgetPassword .link {
    color: #FF176C;
    text-decoration: none;
    font-family: serif;
@@ -92,7 +97,7 @@
 .authForm button {
    width: 100%;
    height: 45px;
-   background-color: #0f3834;
+   background-color: green;
    color: #fff;
    font-family: serif;
    font-size: 20px;
@@ -101,10 +106,6 @@
    margin-top: 4%;
    border: none;
    cursor: pointer;
-}
-
-.authForm button:hover {
-   transform: scaleX(1.05);
 }
 
 .authForgetPassword {
@@ -120,6 +121,13 @@
 .authForgetPassword a {
    font-size: 13px;
    cursor: pointer;
+}
+
+.authForgetPassword a:nth-child(2) {
+   font-size: 13px;
+   cursor: pointer;
+   color: green;
+   font-weight: 700;
 }
 
 .footerContainer {
@@ -175,12 +183,25 @@
 
 @media (max-width:700px) {
    .authItems {
-      width: 90%;
-      margin-top: 25%;
+      width: 85%;
+      margin-top: 0%;
+      border-radius: 5px;
    }
 
    .authLogin {
-      width: 90%;
+      width: 100%;
+   }
+
+   .logoContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5%;
+   }
+   
+   .logoContainer .logo {
+      height: auto;
+      width: 23%;
    }
 
    .authLogin h2 {
@@ -188,7 +209,7 @@
    }
 
    .authForm {
-      width: 80%;
+      width: 75%;
    }
 
    .authFormInput label {
@@ -216,11 +237,12 @@
 
 
 
+
 /*Desktops/laptops 1024 - 1440 x 600 - 900*/
 @media (min-width: 1024px) and (max-width: 1440px) and (min-height: 600px) and (max-height: 900px) {
    .authItems {
       width: 40%;
-      margin-top: 5%;
+      margin-top: 0%;
    }
 
    .authLogin {
@@ -266,7 +288,7 @@
 @media (min-width: 1680px) and (max-width: 1920px) and (min-height: 1050px) and (max-height: 1200px) {
    .authItems {
       width: 30%;
-      margin-top: 5%;
+      margin-top: 0%;
    }
 
    .authLogin {
@@ -310,7 +332,7 @@
 @media (min-width: 2560px) and (max-width: 2560px) and (min-height: 1440px) and (max-height: 1440px) {
    .authItems {
       width: 30%;
-      margin-top: 5%;
+      margin-top: 0%;
    }
 
    .authLogin {
@@ -359,7 +381,7 @@
 @media (min-width: 3840px) and (max-width: 4096px) and (min-height: 2160px) and (max-height: 2304px) {
    .authItems {
       width: 22%;
-      margin-top: 5%;
+      margin-top: 0%;
    }
 
    .authLogin {
