@@ -1,0 +1,202 @@
+.homeContainer {
+   width: 100%;
+   height: 100%;
+}
+
+.navigationContainer {
+   width: 100%;
+   height: 10vh;
+}
+
+.navigationContents {
+   width: 60%;
+   margin: 10px auto;
+   display: grid;
+   grid-template-columns: 1fr auto;
+}
+
+.storeNameContainer {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+}
+
+.menuIcon {
+   display: none;
+}
+
+.storeNameContainer .name {
+   background-color: #008374;
+   margin-right: 15px;
+   padding: 7px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.storeNameContainer .name h1 {
+   color: #fff;
+   font-size: 1.3em;
+   font-family: sans-serif;
+}
+
+.searchContainer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.searchContainer input {
+   width: 250px;
+   height: 37px;
+   border: 1px solid rgba(0, 0, 0, 0.3);
+   padding-left: 10px;
+   border-radius: 5px;
+}
+
+.linkContainer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.linkContainer .link {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   margin-left: 45px;
+   cursor: pointer;
+}
+
+.linkContainer .link .icon {
+   color: #f85a40;
+   font-size: 1.4em;
+}
+
+.linkContainer .link h1 {
+   font-size: 0.9em;
+   font-family: sans-serif;
+   font-weight: 400;
+}
+
+
+@media (max-width:700px) {
+   .homeContainer {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background-color: #fff;
+   }
+
+   .menuIcon {
+      display: flex;
+   }
+
+   .searchContainer {
+      display: none;
+   }
+
+   .linkContainer .link:nth-child(1) {
+      display: none;
+   }
+
+   .linkContainer .link:nth-child(4) {
+      display: none;
+   }
+
+   .linkContainer .link:nth-child(3) {
+      display: none;
+   }
+
+   .navigationContents {
+      width: 97%;
+   }
+
+   .storeNameContainer .name h1 {
+      font-size: 1em;
+   }
+
+   .storeNameContainer .name {
+      margin-left: 10px;
+      padding: 10px;
+   }
+
+   .linkContainer .link .icon {
+      font-size: 1.25em;
+   }
+
+   .menuContainer{
+      height: 100vh;
+      width: 55%;
+      background-color: #fff;
+      z-index: 900;
+      position: fixed;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      box-shadow: 0px 0px 0px 10000px rgba(0,0,0,0.7);
+    }
+
+    .menuHeader{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding: 5px;
+      margin-top: 10px;
+    }
+
+    .menuHeader h1:nth-child(1){
+      font-size: 1em;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .menuHeader h1:nth-child(2){
+      font-size: 1.4em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menuNav{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+    }
+
+    .menuNav h1{
+      font-size: 0.9em;
+      font-weight: 100;
+    }
+
+    .menuNav .catIcon{
+      font-size: 1.2em;
+      color: #f85a40;
+    }
+
+    .actionContainer{
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    .actionContainer .link{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .actionContainer .link h1{
+      font-size: 0.9em;
+    }
+
+    .actionContainer .link .icon{
+      font-size: 0.9em;
+      color: #f85a40;
+    }
+}

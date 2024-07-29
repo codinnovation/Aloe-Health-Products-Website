@@ -1,0 +1,272 @@
+.homeContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.homeContents {
+  display: grid;
+  width: 60%;
+  margin: 0 auto;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 5%;
+}
+
+.profileContainer {
+  height: 29vh;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+
+.profilePhoto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #eeee;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 10px auto;
+}
+
+.profilePhoto .photo {
+  font-size: 3em;
+}
+
+.profileName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileName h1 {
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
+.profileEmail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.profileEmail h1 {
+  font-size: 1em;
+  font-family: sans-serif;
+  font-weight: 200;
+}
+
+.profileCountry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+
+.profileCountry h1 {
+  font-size: 1em;
+  font-family: sans-serif;
+}
+
+.signOut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 50%;
+  margin: 50px auto;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.signOut .logoutIcon {
+  font-size: 1em;
+  color: #eee;
+
+}
+
+.signOut h1 {
+  font-size: 1em;
+  color: #eee;
+}
+
+
+.mainContainer {
+  height: 88vh;
+  width: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  scrollbar-color: #eeee;
+  scrollbar-width: thin;
+}
+
+.mainContainer::-webkit-scrollbar {
+  width: 3px;
+}
+
+.mainContainer .productContainer {
+  height: auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+
+.productHeader {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.productHeader h1 {
+  font-size: 1.4em;
+  font-family: sans-serif;
+  margin-top: 5px;
+  color: #008374;
+}
+
+.productHeader .CartIcon {
+  font-size: 1.4em;
+  font-family: sans-serif;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.productImage {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto;
+}
+
+.productImage .image {
+  width: 60%;
+  height: 100%;
+}
+
+.productDescription {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.productDescription .description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productDescription .description h1:nth-child(1) {
+  font-weight: 900;
+  font-size: 1.2em;
+  margin-right: 10px;
+}
+
+.productDescription .description h1:nth-child(2) {
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.categoriesContainer {
+  height: 50vh;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.category {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.category .catIcon {
+  font-size: 1em;
+  color: #f85a40;
+}
+
+.category h1 {
+  font-size: 0.9em;
+  font-family: sans-serif;
+  font-weight: 100;
+  margin-left: 5px;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+}
+
+@media (max-width:700px) {
+  .homeContents {
+    grid-template-columns: auto;
+    width: 97%;
+    height: 100%;
+  }
+
+  .profileContainer {
+    display: none;
+  }
+
+  .categoriesContainer {
+    display: none;
+  }
+
+  .productHeader {
+    width: 90%;
+  }
+
+  .productHeader h1 {
+    font-size: 1em;
+  }
+
+  .productHeader .CartIcon {
+    font-size: 1.2em;
+  }
+
+  .productImage {
+    width: 90%;
+  }
+
+  .productImage .image {
+    width: 70%;
+    height: 100%;
+  }
+
+  .productDescription {
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .productDescription .description h1:nth-child(1) {
+    font-weight: 300;
+    font-size: 1em;
+    text-align: left;
+  }
+  .productDescription .description h1:nth-child(2) {
+    font-weight: 300;
+    font-size: 1em;
+    text-align: left;
+  }
+
+
+}
