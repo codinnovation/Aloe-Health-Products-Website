@@ -86,7 +86,6 @@ function Index() {
         }
       } catch (error) {
         console.error("Error fetching user:", error);
-        router.push("/login");
       }
     };
 
@@ -338,23 +337,23 @@ function Index() {
 
 export default Index;
 
-export const getServerSideProps = withSession(async function ({ req, res }) {
-  const user = req.session.get("user");
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-  if (user) {
-    req.session.set("user", user);
-    await req.session.save();
-  }
-  return {
-    props: {
-      user: user,
-    },
-  };
-});
+// export const getServerSideProps = withSession(async function ({ req, res }) {
+//   const user = req.session.get("user");
+//   if (!user) {
+//     return {
+//       redirect: {
+//         destination: "/login",
+//         permanent: false,
+//       },
+//     };
+//   }
+//   if (user) {
+//     req.session.set("user", user);
+//     await req.session.save();
+//   }
+//   return {
+//     props: {
+//       user: user,
+//     },
+//   };
+// });
