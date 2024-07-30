@@ -1,4 +1,4 @@
-.authContainer {
+.loginContainer {
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -7,43 +7,44 @@
    width: 100%;
 }
 
-.authItems {
-   width: 30%;
+.loginContents {
+   width: 25%;
    height: 100%;
-   box-shadow: 0px 0px 2px;
+   box-shadow: 0px 0px 50px green;
    margin-top: 0%;
-   border-radius: 20px;
+   border-radius: 10px;
 }
 
-.logoContainer {
+.loginLogoContainer {
    display: flex;
    justify-content: center;
    align-items: center;
    margin-top: 5%;
 }
 
-.logoContainer .logo {
+.loginLogoContainer .logo {
    height: auto;
    width: 20%;
+   border-radius: 50%;
 }
 
-.authLogin {
+.loginContainerHeader {
    margin: 1% auto;
    width: 50%;
 }
 
-.authLogin h2 {
+.loginContainerHeader h2 {
    font-size: 20px;
    font-family: serif;
    text-align: center;
 }
 
-.authForm {
-   width: 50%;
+.loginForm {
+   width: 55%;
    margin: 7% auto;
 }
 
-.authFormInput {
+.loginFormInput {
    display: flex;
    flex-direction: column;
    width: 100%;
@@ -51,15 +52,15 @@
    position: relative;
 }
 
-.authFormInput label {
-   color: green;
-   font-size: 18px;
+.loginFormInput label {
+   color: #000;
+   font-size: 17px;
    font-family: serif;
-   font-weight: 700;
+   font-weight: 100;
 }
 
-.authFormInput input,
-.authFormInput select {
+.loginFormInput input,
+.loginFormInput select {
    width: 100%;
    height: 45px;
    border-radius: 5px;
@@ -73,28 +74,15 @@
    transition: 0.2s ease-in-out;
 }
 
-.authFormInput .visibilityIcon {
+.loginFormInput .visibilityIcon {
    position: absolute;
    top: 62%;
    transform: translateY(-50%);
    right: 10px;
 }
 
-.authForgetPassword a {
-   color: #FF176C;
-   text-decoration: none;
-   font-family: serif;
-   font-size: 18px;
-}
 
-.authForgetPassword .link {
-   color: #FF176C;
-   text-decoration: none;
-   font-family: serif;
-   font-size: 18px;
-}
-
-.authForm button {
+.loginForm button {
    width: 100%;
    height: 45px;
    background-color: green;
@@ -108,37 +96,25 @@
    cursor: pointer;
 }
 
-.authForgetPassword {
+.loginActions {
    display: grid;
    grid-template-columns: 1fr auto;
    width: 100%;
 }
 
-.authForgetPassword .link {
-   font-size: 13px;
+
+.loginActions a {
+   color: #FF176C;
+   text-decoration: none;
+   font-family: serif;
+   font-size: 15px;
 }
 
-.authForgetPassword a {
-   font-size: 13px;
-   cursor: pointer;
-}
-
-.authForgetPassword a:nth-child(2) {
-   font-size: 13px;
+.loginActions a:nth-child(2) {
+   font-size: 15px;
    cursor: pointer;
    color: green;
    font-weight: 700;
-}
-
-.footerContainer {
-   margin-top: auto;
-   margin-bottom: 10px;
-}
-
-.footerContainer p {
-   color: #230035;
-   font-size: 20px;
-   font-family: serif;
 }
 
 .loadingContainer {
@@ -155,309 +131,627 @@
    z-index: 9999;
 }
 
-.loadingCircle {
-   width: 50px;
-   height: 50px;
-   border-radius: 50%;
-   border: 3px solid #fff;
-   border-top-color: transparent;
-   animation: spin 1s linear infinite;
-}
 
-@keyframes spin {
-   0% {
-      transform: rotate(0deg);
+/* Desktop/Laptop -- [1024 x 600 - 768] */
+@media(min-width:1024px) and (max-width:1024px) and (min-height:600px) and (max-height:768px) {
+   .loginContents {
+      width: 30%;
    }
 
-   100% {
-      transform: rotate(360deg);
-   }
-}
-
-.loadingContainer span {
-   margin-left: 10px;
-   font-size: 17px;
-   color: dodgerblue;
-   font-family: 'metropolis';
-}
-
-@media (max-width:700px) {
-   .authItems {
-      width: 85%;
-      margin-top: 0%;
-      border-radius: 5px;
+   .loginLogoContainer .logo {
+      width: 25%;
    }
 
-   .authLogin {
+   .loginContainerHeader {
       width: 100%;
    }
 
-   .logoContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 5%;
+   .loginContainerHeader h2 {
+      font-size: 17px;
    }
-   
-   .logoContainer .logo {
+
+   .loginForm {
+      width: 75%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 15px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 40px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 20px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 40px;
+      font-size: 17px;
+   }
+
+
+   .loginActions a {
+      font-size: 14px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 14px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+/* Desktop/Laptop -- [1280 - 1366 x 768 - 800] */
+@media(min-width:1280px) and (max-width:1366px) and (min-height:768px) and (max-height:800px) {
+   .loginContents {
+      width: 29%;
+   }
+
+   .loginLogoContainer .logo {
+      width: 24%;
+   }
+
+   .loginContainerHeader {
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 18px;
+   }
+
+   .loginForm {
+      width: 70%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 16px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 43px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 22px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 43px;
+      font-size: 17px;
+   }
+
+
+   .loginActions a {
+      font-size: 15px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 15px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+/* Desktop/Laptop -- [1440 - 1680 x 900 - 1050] */
+@media(min-width:1440px) and (max-width:1680px) and (min-height:900px) and (max-height:1050px) {
+   .loginContents {
+      width: 26%;
+   }
+
+   .loginLogoContainer .logo {
+      width: 24%;
+   }
+
+   .loginContainerHeader {
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 19px;
+   }
+
+   .loginForm {
+      width: 68%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 17px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 45px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 22.5px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 45px;
+      font-size: 17px;
+   }
+
+
+   .loginActions a {
+      font-size: 15.5px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 15.5px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+/* Desktop/Laptop -- [1920 x 1080 - 1200] */
+@media(min-width:1440px) and (max-width:1920px) and (min-height:1080px) and (max-height:1200px) {
+   .loginContents {
+      width: 26%;
+   }
+
+   .loginLogoContainer .logo {
+      width: 22%;
+   }
+
+   .loginContainerHeader {
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 20px;
+   }
+
+   .loginForm {
+      width: 68%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 18px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 53px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 22.5px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 53px;
+      font-size: 18px;
+   }
+
+
+   .loginActions a {
+      font-size: 16px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 16px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+
+
+/* Desktop/Laptop -- [2560- 4096 x 1440 -2304 ] */
+@media(min-width:2560px) and (max-width:4096px) and (min-height:1440px) and (max-height:2304px) {
+   .loginContents {
+      width: 21%;
+   }
+
+   .loginLogoContainer .logo {
+      width: 20%;
+   }
+
+   .loginContainerHeader {
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 23px;
+   }
+
+   .loginForm {
+      width: 65%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 19px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 58px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 22.5px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 58px;
+      font-size: 19px;
+   }
+
+
+   .loginActions a {
+      font-size: 17px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 17px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+
+
+
+
+
+/* Desktop/Laptop -- [5120 x 2880 ] */
+@media(min-width:5120px) and (max-width:5120px) and (min-height:2880px) and (max-height:2880px) {
+   .loginContents {
+      width: 18%;
+   }
+
+   .loginLogoContainer .logo {
+      width: 18%;
+   }
+
+   .loginContainerHeader {
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 33px;
+   }
+
+   .loginForm {
+      width: 60%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput {
+      margin-bottom: 8%;
+      position: relative;
+   }
+
+   .loginFormInput label {
+      color: #000;
+      font-size: 19px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 68px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 65%;
+      font-size: 24px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 68px;
+      font-size: 22px;
+   }
+
+
+   .loginActions a {
+      font-size: 18px;
+      font-weight: 100;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 18px;
+      font-weight: 100;
+   }
+
+}
+
+
+
+/* Tablet/iPad -- [991 - 1024 x 1280 - 1366 ] */
+@media(min-width:991px) and (max-width:1024px) and (min-height:1280px) and (max-height:1366px) {
+   .loginContents {
+      width: 39%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+   .loginContainerHeader h2 {
+      font-size: 18px;
+   }
+
+   .loginForm {
+      width: 62%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput label {
+      font-size: 16px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 50px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 22px;
+   }
+
+   .loginActions a {
+      font-size: 14px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 14px;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 50px;
+      font-size: 18px;
+   }
+
+}
+
+
+/* Tablet/iPad -- [768 - 800 x 1024 -1280 ] */
+@media(min-width:768px) and (max-width:800px) and (min-height:1024px) and (max-height:1280px) {
+   .loginContents {
+      width: 45%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+
+   .loginLogoContainer .logo {
       height: auto;
       width: 23%;
    }
 
-   .authLogin h2 {
+
+   .loginContainerHeader h2 {
       font-size: 17px;
    }
 
-   .authForm {
-      width: 75%;
+   .loginForm {
+      width: 62%;
+      margin: 7% auto;
    }
 
-   .authFormInput label {
-      color: #000;
-      font-size: 14px;
-   }
-
-   .authFormInput input {
-      height: 40px;
-   }
-
-   .footerContainer p {
-      color: #000;
+   .loginFormInput label {
       font-size: 15px;
-      margin-bottom: 7%;
    }
 
-   .authForm button {
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 45px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
+   }
+
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 40px;
+      font-size: 15.5px;
+   }
+
+}
+
+
+
+/* Tablet/iPad -- [600 - 604 x 960 - 1024 ] */
+@media(min-width:600px) and (max-width:604px) and (min-height:960px) and (max-height:1024px) {
+   .loginContents {
+      width: 56%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 22%;
+   }
+
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 65%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput label {
+      font-size: 15px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
       width: 100%;
       height: 40px;
    }
-}
 
-
-
-
-
-
-/*Desktops/laptops 1024 - 1440 x 600 - 900*/
-@media (min-width: 1024px) and (max-width: 1440px) and (min-height: 600px) and (max-height: 900px) {
-   .authItems {
-      width: 40%;
-      margin-top: 0%;
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
    }
 
-   .authLogin {
-      margin: 10% auto;
-      width: 70%;
+   .loginActions a {
+      font-size: 13px;
    }
 
-   .authLogin h2 {
-      font-size: 1.4em;
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
    }
 
-   .authForm {
-      width: 70%;
-      margin: 7% auto;
-   }
-
-   .authFormInput label {
-      font-size: 1em;
-   }
-
-
-   .authForgetPassword a {
-      font-size: 1em;
-   }
-
-   .footerContainer p {
-      font-size: 1.4em;
-   }
-
-}
-
-
-
-
-
-
-
-
-
-
-/*Desktops/laptops 1680 - 1920 x 1050 - 1200 */
-
-@media (min-width: 1680px) and (max-width: 1920px) and (min-height: 1050px) and (max-height: 1200px) {
-   .authItems {
-      width: 30%;
-      margin-top: 0%;
-   }
-
-   .authLogin {
-      margin: 10% auto;
-      width: 70%;
-   }
-
-   .authLogin h2 {
-      font-size: 1.6em;
-   }
-
-   .authForm {
-      width: 70%;
-      margin: 7% auto;
-   }
-
-   .authFormInput label {
-      font-size: 1.2em;
-   }
-
-
-   .authForgetPassword a {
-      font-size: 1.1em;
-   }
-
-   .footerContainer p {
-      font-size: 1.6em;
-   }
-
-}
-
-
-
-
-
-
-
-
-
-/*Desktops/laptops 2560 -  x 1440 -  */
-@media (min-width: 2560px) and (max-width: 2560px) and (min-height: 1440px) and (max-height: 1440px) {
-   .authItems {
-      width: 30%;
-      margin-top: 0%;
-   }
-
-   .authLogin {
-      margin: 10% auto;
-      width: 70%;
-   }
-
-   .authLogin h2 {
-      font-size: 2.3em;
-   }
-
-   .authForm {
-      width: 70%;
-      margin: 7% auto;
-   }
-
-   .authFormInput label {
-      font-size: 1.5em;
-   }
-
-   .authFormInput input {
+   .loginForm button {
       width: 100%;
-      height: 65px;
-   }
-
-
-   .authForgetPassword a {
-      font-size: 1.4em;
-   }
-
-   .footerContainer p {
-      font-size: 2em;
+      height: 40px;
+      font-size: 15.5px;
    }
 
 }
 
 
 
+/* Tablet/iPad -- [480 x 800 ] */
+@media(min-width:480px) and (max-width:480px) and (min-height:800px) and (max-height:800px) {
+   .loginContents {
+      width: 70%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
 
 
-
-
-
-
-/*Desktops/laptops 3840 - 4096 x 2160 - 2304 */
-@media (min-width: 3840px) and (max-width: 4096px) and (min-height: 2160px) and (max-height: 2304px) {
-   .authItems {
+   .loginLogoContainer .logo {
+      height: auto;
       width: 22%;
-      margin-top: 0%;
    }
 
-   .authLogin {
-      margin: 10% auto;
-      width: 70%;
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
    }
 
-   .authLogin h2 {
-      font-size: 2.3em;
-   }
-
-   .authForm {
-      width: 70%;
+   .loginForm {
+      width: 65%;
       margin: 7% auto;
    }
 
-   .authFormInput label {
-      font-size: 1.5em;
+   .loginFormInput label {
+      font-size: 15px;
    }
 
-   .authFormInput input {
+   .loginFormInput input,
+   .loginFormInput select {
       width: 100%;
-      height: 65px;
+      height: 40px;
    }
 
-   .authForm button {
-      width: 100%;
-      height: 65px;
-      font-size: 2em;
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
    }
 
-
-   .authForgetPassword a {
-      font-size: 1.4em;
+   .loginActions a {
+      font-size: 13px;
    }
 
-   .footerContainer p {
-      font-size: 2em;
-   }
-
-}
-
-
-
-
-/*Desktops/laptops 991 - 1024  x 1280 - 1366  */
-@media (min-width: 991px) and (max-width: 1024px) and (min-height: 1280px) and (max-height: 1366px) {
-   .authItems {
-      width: 40%;
-   }
-
-   .authLogin {
-      margin: 10% auto;
-      width: 100%;
-   }
-
-   .authLogin h2 {
-      font-size: 1.3em;
-   }
-
-   .authForm {
-      width: 70%;
-      margin: 7% auto;
-   }
-
-   .authForgetPassword a {
-      font-size: 1.1em;
-   }
-
-   .authForm button {
-      width: 100%;
-      height: 55px;
-   }
-
-   .footerContainer p {
-      font-size: 1.3em;
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
    }
 }
 
@@ -465,82 +759,295 @@
 
 
 
-/*Desktops/laptops 720 - 800  x 1024 - 1366  */
-@media (min-width: 720px) and (max-width: 800px) and (min-height: 1024px) and (max-height: 1380px) {
-   .authItems {
-      width: 50%;
+
+
+
+/* Mobile Phone -- [991 x 568 ] */
+@media(min-width:991px) and (max-width:991px) and (min-height:568px) and (max-height:568px) {
+   .loginContents {
+      width: 36%;
    }
 
-   .authLogin {
-      margin: 10% auto;
+   .loginContainerHeader {
+      margin: 3% auto;
       width: 100%;
    }
 
-   .authLogin h2 {
-      font-size: 1.3em;
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 22%;
    }
 
-   .authForm {
-      width: 75%;
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 65%;
       margin: 7% auto;
    }
 
-   .authForgetPassword a {
-      font-size: 1.1em;
+   .loginFormInput label {
+      font-size: 15px;
    }
 
-   .authForm button {
+   .loginFormInput input,
+   .loginFormInput select {
       width: 100%;
-      height: 55px;
+      height: 40px;
    }
 
-   .footerContainer p {
-      font-size: 1.3em;
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
+   }
+
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
    }
 }
 
 
-
-
-/*Desktops/laptops 600 - 800  x 1024 - 1280  */
-@media (min-width: 600px) and (max-width: 604px) and (min-height: 966px) and (max-height: 1024px) {
-   .authItems {
-      width: 60%;
+/* Mobile Phone -- [411 - 480 x 690 - 896 ] */
+@media(min-width:411px) and (max-width:480px) and (min-height:690px) and (max-height:896px) {
+   .loginContents {
+      width: 70%;
    }
 
-   .authLogin {
-      margin: 10% auto;
+   .loginContainerHeader {
+      margin: 3% auto;
       width: 100%;
    }
 
-   .authLogin h2 {
-      font-size: 1.3em;
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 20%;
    }
 
-   .authForm {
-      width: 75%;
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 70%;
       margin: 7% auto;
    }
 
-   .authFormInput label {
-      font-size: 1.2em;
+   .loginFormInput label {
+      font-size: 15px;
    }
 
-   .authFormInput input {
+   .loginFormInput input,
+   .loginFormInput select {
       width: 100%;
-      height: 55px;
+      height: 45px;
    }
 
-   .authForgetPassword a {
-      font-size: 1.1em;
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
    }
 
-   .authForm button {
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
+   }
+
+   .loginForm button {
       width: 100%;
-      height: 55px;
+      height: 40px;
+      font-size: 15.5px;
    }
 
-   .footerContainer p {
-      font-size: 1.3em;
+}
+
+/* Mobile Phone -- [320 - 480 - 568 ] */
+@media(min-width:320px) and (max-width:320px) and (min-height:480px) and (max-height:568px) {
+   .loginContents {
+      width: 85%;
    }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 20%;
+   }
+
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 80%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput label {
+      font-size: 15px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 45px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
+   }
+
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 40px;
+      font-size: 15.5px;
+   }
+
+}
+
+
+/* Mobile Phone -- [360 - 384 x 600 - 812 ] */
+@media(min-width:360px) and (max-width:384px) and (min-height:600px) and (max-height:812px) {
+   .loginContents {
+      width: 80%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 20%;
+   }
+
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 76%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput label {
+      font-size: 15px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 45px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
+   }
+
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 40px;
+      font-size: 15.5px;
+   }
+
+}
+
+/* Mobile Phone -- [max-wdith = 700 ] */
+@media(max-width:700px) {
+   .loginContents {
+      width: 80%;
+   }
+
+   .loginContainerHeader {
+      margin: 3% auto;
+      width: 100%;
+   }
+
+
+   .loginLogoContainer .logo {
+      height: auto;
+      width: 20%;
+   }
+
+
+   .loginContainerHeader h2 {
+      font-size: 17px;
+   }
+
+   .loginForm {
+      width: 76%;
+      margin: 7% auto;
+   }
+
+   .loginFormInput label {
+      font-size: 15px;
+   }
+
+   .loginFormInput input,
+   .loginFormInput select {
+      width: 100%;
+      height: 45px;
+   }
+
+   .loginFormInput .visibilityIcon {
+      top: 63%;
+      font-size: 21px;
+   }
+
+   .loginActions a {
+      font-size: 13px;
+   }
+
+   .loginActions a:nth-child(2) {
+      font-size: 13px;
+      font-weight: 100;
+   }
+
+   .loginForm button {
+      width: 100%;
+      height: 40px;
+      font-size: 15.5px;
+   }
+
 }

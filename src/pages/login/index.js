@@ -22,7 +22,7 @@ function LoginForm() {
   const [verifiedUser, setVerifiedUser] = useState(null);
   const router = useRouter();
 
-  console.log(verifiedUser)
+  console.log(verifiedUser);
 
   const [userCredentials, setUserCredentials] = useState({
     email: "",
@@ -81,16 +81,12 @@ function LoginForm() {
       });
 
       if (response.ok) {
-        const result = await response.json();
-        if (result.user) {
-          Cookies.set("user", JSON.stringify(result.user), { expires: 1 }); // Expires in 1 day
-          toast.success("Login successful");
-          setIsSubmitting(false);
+        setIsSubmitting(true);
+        toast.success("Login successful");
+        setTimeout(() => {
           router.push("/home");
-        } else {
-          toast.error("Login Failed");
           setIsSubmitting(false);
-        }
+        }, 2000);
       } else {
         toast.error("Login Failed");
         setIsSubmitting(false);
@@ -132,18 +128,18 @@ function LoginForm() {
         <link rel="icon" href="/logo-1.JPG" />
       </Head>
 
-      <div className={styles.authContainer}>
-        <div className={styles.authItems}>
-          <div className={styles.logoContainer}>
+      <div className={styles.loginContainer}>
+        <div className={styles.loginContents}>
+          <div className={styles.loginLogoContainer}>
             <Image src={LogoInLogo} alt="logo-" className={styles.logo} />
           </div>
-          <div className={styles.authLogin}>
+          <div className={styles.loginContainerHeader}>
             <h2>Login to your account</h2>
           </div>
 
-          <div className={styles.authForm}>
+          <div className={styles.loginForm}>
             <form onSubmit={handleFormSubmit}>
-              <div className={styles.authFormInput}>
+              <div className={styles.loginFormInput}>
                 <label>Email</label>
                 <input
                   type="text"
@@ -155,7 +151,7 @@ function LoginForm() {
                 />
               </div>
 
-              <div className={styles.authFormInput}>
+              <div className={styles.loginFormInput}>
                 <label>Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -178,7 +174,7 @@ function LoginForm() {
                 )}
               </div>
 
-              <div className={styles.authForgetPassword}>
+              <div className={styles.loginActions}>
                 <a onClick={resetPassword}>Forget Password</a>
                 <Link href="/create">Create Account</Link>
               </div>
