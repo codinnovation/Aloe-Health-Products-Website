@@ -11,8 +11,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import LogoInLogo from "../../../public/logo-1.JPG";
 import Image from "next/image";
-import { ref, push } from "firebase/database";
-import { db } from "../../../firebase.config";
+
 
 function CreateForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,20 +21,9 @@ function CreateForm() {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
-    name: "",
   });
 
-  const saveUserInDb = async () => {
-    try {
-      const userRef = push(ref(db, "users"),  userCredentials);
-      const userRefKey = userRef.key;
-      toast.success("Saved User");
-      return userRefKey;
-    } catch (error) {
-      console.log("Error saving user");
-      toast.error("Error saving user");
-    }
-  };
+ 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -66,10 +54,6 @@ function CreateForm() {
 
       if (response.ok) {
         setIsSubmitting(false);
-        setTimeout(() => {
-          toast.success("Please wait...")
-        }, 1000);
-        saveUserInDb()
         toast.success("Account created successfully");
         router.push("/");
       } else {
@@ -100,29 +84,18 @@ function CreateForm() {
         <link rel="icon" href="/logo-1.JPG" />
       </Head>
 
-      <div className={styles.authContainer}>
-        <div className={styles.authItems}>
-          <div className={styles.logoContainer}>
+      <div className={styles.loginContainer}>
+        <div className={styles.loginContents}>
+          <div className={styles.loginLogoContainer}>
             <Image src={LogoInLogo} alt="logo-" className={styles.logo} />
           </div>
-          <div className={styles.authLogin}>
-            <h2>Please create your account</h2>
+          <div className={styles.loginContainerHeader}>
+            <h2>Create  your account</h2>
           </div>
 
-          <div className={styles.authForm}>
+          <div className={styles.loginForm}>
             <form onSubmit={handleFormSubmit}>
-              <div className={styles.authFormInput}>
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  value={userCredentials.name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className={styles.authFormInput}>
+              <div className={styles.loginFormInput}>
                 <label>Email</label>
                 <input
                   type="text"
@@ -134,7 +107,7 @@ function CreateForm() {
                 />
               </div>
 
-              <div className={styles.authFormInput}>
+              <div className={styles.loginFormInput}>
                 <label>Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -157,7 +130,7 @@ function CreateForm() {
                 )}
               </div>
 
-              <div className={styles.authForgetPassword}>
+              <div className={styles.loginActions}>
                 <Link href="/login">Sign In</Link>
               </div>
 
