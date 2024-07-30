@@ -157,28 +157,38 @@ function Index() {
                 <div className={styles.menuNavigations}>
                   <div className={styles.link}>
                     <SpaIcon className={styles.linkIcon} />
-                    <Link href="">Health & Beauty</Link>
+                    <Link href="">Health & Wellness</Link>
                   </div>
 
 
                   <div className={styles.link}>
                     <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Computing</Link>
+                    <Link href="">Skincare</Link>
                   </div>
 
                   <div className={styles.link}>
                     <FoodBankIcon className={styles.linkIcon} />
-                    <Link href="">Supermarket</Link>
+                    <Link href="">Hair Care</Link>
                   </div>
 
                   <div className={styles.link}>
                     <SpaIcon className={styles.linkIcon} />
-                    <Link href="">Health & Beauty</Link>
+                    <Link href="">Personal Care</Link>
                   </div>
 
                   <div className={styles.link}>
                     <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Computing</Link>
+                    <Link href="">Speical Products</Link>
+                  </div>
+
+                  <div className={styles.link}>
+                    <ComputerIcon className={styles.linkIcon} />
+                    <Link href="">Suplements</Link>
+                  </div>
+
+                  <div className={styles.link}>
+                    <ComputerIcon className={styles.linkIcon} />
+                    <Link href="">Other Products</Link>
                   </div>
                 </div>
               </div>

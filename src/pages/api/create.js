@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import withSession from "./session";
 import { auth } from "../../../firebase.config";
-import { updateProfile } from "firebase/auth";
 
 export default withSession(async function handler(req, res) {
   if (req.method === "POST") {

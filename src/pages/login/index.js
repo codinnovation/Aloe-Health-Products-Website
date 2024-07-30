@@ -9,21 +9,50 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth } from "../../../firebase.config";
+import { auth, db } from "../../../firebase.config";
+import { ref, get } from "firebase/database";
 import LogoInLogo from "../../../public/logo-1.JPG";
 import Image from "next/image";
+import { sendPasswordResetEmail } from "firebase/auth";
+import Cookies from "js-cookie";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verifiedUser, setVerifiedUser] = useState(null);
   const router = useRouter();
 
+  console.log(verifiedUser)
 
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userRef = ref(db, "users"); // Adjust the path if needed
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          // Map through the users and check for a match
+          for (const key in users) {
+            if (users[key].email === userCredentials.email) {
+              setVerifiedUser({ ...users[key], key });
+              break;
+            }
+          }
+        }
+      } catch (error) {
+        toast.error("Error fetching users from database");
+      }
+    };
+
+    if (userCredentials.email) {
+      fetchUsers();
+    }
+  }, [userCredentials.email]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +64,6 @@ function LoginForm() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
     setIsSubmitting(true);
 
     let data = {
@@ -53,9 +81,16 @@ function LoginForm() {
       });
 
       if (response.ok) {
-        toast.success("Login successful");
-        setIsSubmitting(false);
-        router.push("/home");
+        const result = await response.json();
+        if (result.user) {
+          Cookies.set("user", JSON.stringify(result.user), { expires: 1 }); // Expires in 1 day
+          toast.success("Login successful");
+          setIsSubmitting(false);
+          router.push("/home");
+        } else {
+          toast.error("Login Failed");
+          setIsSubmitting(false);
+        }
       } else {
         toast.error("Login Failed");
         setIsSubmitting(false);

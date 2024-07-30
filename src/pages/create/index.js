@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import styles from "../../styles/create.module.css";
 import VisibilityOffOutlined from "@mui/icons-material/VisibilityOffOutlined";
@@ -8,9 +8,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
-import Link from 'next/link'
+import Link from "next/link";
 import LogoInLogo from "../../../public/logo-1.JPG";
 import Image from "next/image";
+import { ref, push } from "firebase/database";
+import { db } from "../../../firebase.config";
 
 function CreateForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +24,18 @@ function CreateForm() {
     password: "",
     name: "",
   });
+
+  const saveUserInDb = async () => {
+    try {
+      const userRef = push(ref(db, "users"),  userCredentials);
+      const userRefKey = userRef.key;
+      toast.success("Saved User");
+      return userRefKey;
+    } catch (error) {
+      console.log("Error saving user");
+      toast.error("Error saving user");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,8 +65,12 @@ function CreateForm() {
       });
 
       if (response.ok) {
-        toast.success("Account created successfully");
         setIsSubmitting(false);
+        setTimeout(() => {
+          toast.success("Please wait...")
+        }, 1000);
+        saveUserInDb()
+        toast.success("Account created successfully");
         router.push("/");
       } else {
         toast.error("Account creation failed");
@@ -65,7 +83,6 @@ function CreateForm() {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <>
@@ -94,6 +111,17 @@ function CreateForm() {
 
           <div className={styles.authForm}>
             <form onSubmit={handleFormSubmit}>
+              <div className={styles.authFormInput}>
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  value={userCredentials.name}
+                  onChange={handleInputChange}
+                />
+              </div>
               <div className={styles.authFormInput}>
                 <label>Email</label>
                 <input

@@ -98,13 +98,25 @@
 }
 
 
-.mainContainer {
+.activeComponent {
   height: 88vh;
   width: 100%;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-color: #eeee;
   scrollbar-width: thin;
+}
+
+.productContainerHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: serif;
+}
+
+.productContainerHeader h1 {
+  font-size: 17px;
 }
 
 .mainContainer::-webkit-scrollbar {
@@ -240,6 +252,75 @@
   z-index: 9999;
 }
 
+.productDesContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #000;
+  box-shadow: 0px 0px 0px 10000px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.productDesContainerHeader {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 10px;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.productDesContainerHeader h1 {
+  font-size: 23px;
+  font-family: serif;
+  color: #000;
+}
+
+.productDesContainerHeader h1:nth-child(2){
+  color: red;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+
+
+.productDesTextContainer{
+  height: 60vh;
+  overflow-y: scroll;
+  scrollbar-color: #eeee;
+  scrollbar-width: thin;
+}
+
+.productDesTextContainer::-webkit-scrollbar {
+  width: 3px;
+}
+
+
+.productDesText {
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.productDesText h1 {
+  font-size: 20px;
+  font-family: serif;
+}
+
+.productDesTextTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.productDesTextTitle p{
+  font-family: serif;
+  font-size: 17px;
+}
+
+
+
 @media (max-width:700px) {
   .homeContents {
     grid-template-columns: auto;
@@ -267,7 +348,7 @@
     font-size: 1.2em;
   }
 
-  .mainContainer{
+  .mainContainer {
     height: 100vh;
     margin-top: 0%;
   }
@@ -278,7 +359,7 @@
     margin-bottom: 20px;
     padding: 5px;
   }
-  
+
 
   .productImage {
     width: 90%;
@@ -305,6 +386,62 @@
     font-size: 1em;
     text-align: left;
   }
+
+
+  
+.productDesContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: auto;
+  padding: 10px;
+}
+
+.productDesContainerHeader {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 5px;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.productDesContainerHeader h1 {
+  font-size: 19px;
+}
+
+.productDesContainerHeader h1:nth-child(2){
+  color: red;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+
+.productDesTextContainer{
+  height: 65vh;
+  overflow-y: scroll;
+  scrollbar-color: #eeee;
+  scrollbar-width: thin;
+}
+
+.productDesTextContainer::-webkit-scrollbar {
+  width: 3px;
+}
+
+
+.productDesText {
+  padding: 5px;
+  margin-top: 15px;
+}
+
+.productDesText h1 {
+  font-size: 19px;
+  font-family: serif;
+}
+
+.productDesTextTitle p{
+  font-family: serif;
+  font-size: 15px;
+}
 
 
 }

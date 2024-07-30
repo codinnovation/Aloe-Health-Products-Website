@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Home.module.css";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
-import Image from "next/image";
 import Person from "@mui/icons-material/Person";
 import SpaIcon from "@mui/icons-material/Spa";
 import DeckIcon from "@mui/icons-material/Deck";
 import ComputerIcon from "@mui/icons-material/Computer";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import DiamondIcon from "@mui/icons-material/Diamond";
-import RadioIcon from "@mui/icons-material/Radio";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import MoreIcon from "@mui/icons-material/More";
 import { LogoutRounded } from "@mui/icons-material";
@@ -18,10 +16,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ref, push, get } from "firebase/database";
+import { ref, get, onValue } from "firebase/database";
 import { auth, db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import VideoIcon from "@mui/icons-material/OndemandVideo";
+import withSession from "../api/session";
+import VideoHealthTips from "./videoHealthTips";
+import AnotherComponent from "./anotherComponent";
 
 const style = {
   position: "absolute",
@@ -40,39 +42,36 @@ const style = {
 function Index() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [productData, setProductData] = useState([]);
+  const [openProductDescription, setOpenProductDescription] = useState(false);
   const [user, setUser] = useState(null);
   const router = useRouter();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [openAddCart, setOpenAddCart] = useState(false);
+  const [activeComponent, setActiveComponent] = useState("initialPage");
+
+  const handleOpenProductDes = () => setOpenProductDescription(true);
+  const handleCloseProductDes = () => setOpenProductDescription(false);
+
+  const handleActiveComponent = (active) => {
+    setActiveComponent(active);
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleOpenAddCart = () => {
+    setOpenAddCart(true);
+  };
+  const handleCloseAddCart = () => {
+    setOpenAddCart(false);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dbRef = ref(db, "sneakers");
-        const response = await get(dbRef);
-        const data = response.val();
-
-        if (data && typeof data === "object") {
-          const dataArray = Object.entries(data).map(([key, value]) => ({
-            key,
-            ...value,
-          }));
-          setProductData(dataArray);
-        } else {
-          setProductData([]);
-        }
-      } catch (error) {
-        console.error("Error fetching data:");
-        setProductData([]);
+    const productRef = ref(db, "sneakers");
+    onValue(productRef, (snapshot) => {
+      const data = snapshot.val();
+      const productList = [];
+      for (let id in data) {
+        productList.push({ id, ...data[id] });
       }
-    };
-
-    fetchData();
+      setProductData(productList);
+    });
   }, []);
 
   useEffect(() => {
@@ -91,7 +90,7 @@ function Index() {
       }
     };
 
-    fetchUser(); // Invoke fetchUser function when component mounts
+    fetchUser();
   }, [router]);
 
   const handleLogout = async (e) => {
@@ -118,6 +117,52 @@ function Index() {
     }
   };
 
+  const renderActiveComponent = () => {
+    switch (activeComponent) {
+      case "videoHealthTips":
+        return <VideoHealthTips />;
+      case "anotherComponent":
+        return <AnotherComponent />;
+      default:
+        return (
+          <div className={styles.mainContainer}>
+            <div className={styles.productContainerHeader}>
+              <h1>Showing: Aloe Products</h1>
+            </div>
+            {productData.map((product, index) => (
+              <div className={styles.productContainer} key={index}>
+                <div className={styles.productHeader}>
+                  <h1>{product.title}</h1>
+                  <CartIcon
+                    className={styles.CartIcon}
+                    onClick={handleOpenAddCart}
+                  />
+                </div>
+                <div className={styles.productImage}>
+                  <img
+                    src={product.productImage}
+                    alt="product-image"
+                    className={styles.image}
+                    width={900}
+                    height={900}
+                  />
+                </div>
+                <div className={styles.productDescription}>
+                  <div className={styles.description}>
+                    <h1>Price:</h1>
+                    <h1>{product.productPrice}</h1>
+                  </div>
+                  <div className={styles.readMore}>
+                    <button onClick={handleOpenProductDes}>Read More</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+    }
+  };
+
   return (
     <>
       {isButtonClicked && (
@@ -133,131 +178,50 @@ function Index() {
       <div className={styles.homeContainer}>
         <div className={styles.homeContents}>
           <div className={styles.categoriesContainer}>
-            <div className={styles.category}>
+            <div
+              className={styles.category}
+              onClick={() => handleActiveComponent("initialPage")}
+            >
               <SpaIcon className={styles.catIcon} />
-              <h1>Health & Beauty</h1>
+              <h1>Health & Wellness</h1>
             </div>
-
             <div className={styles.category}>
               <DeckIcon className={styles.catIcon} />
-              <h1>Home & Office</h1>
+              <h1>Skincare</h1>
             </div>
-
             <div className={styles.category}>
               <ComputerIcon className={styles.catIcon} />
-              <h1>Computing</h1>
+              <h1>Hair Care</h1>
             </div>
-
             <div className={styles.category}>
               <FoodBankIcon className={styles.catIcon} />
-              <h1>Supermarket</h1>
+              <h1>Personal Care</h1>
             </div>
-
             <div className={styles.category}>
               <DiamondIcon className={styles.catIcon} />
-              <h1>Fashion</h1>
+              <h1>Specialty Products</h1>
             </div>
-
-            <div className={styles.category}>
-              <RadioIcon className={styles.catIcon} />
-              <h1>Electronics</h1>
-            </div>
-
             <div className={styles.category}>
               <FitnessCenterIcon className={styles.catIcon} />
-              <h1>Sporting Goods</h1>
+              <h1>Supplements</h1>
             </div>
-
-            <div className={styles.category}>
+            <div
+              className={styles.category}
+              onClick={() => handleActiveComponent("videoHealthTips")}
+            >
+              <VideoIcon className={styles.catIcon} />
+              <h1>Health Tips</h1>
+            </div>
+            <div
+              className={styles.category}
+              onClick={() => handleActiveComponent("anotherComponent")}
+            >
               <MoreIcon className={styles.catIcon} />
-              <h1>Other Categories</h1>
+              <h1>Another Component</h1>
             </div>
           </div>
-
-          <div className={styles.mainContainer}>
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Forever Aloe Vera Gel</h1>
-                <CartIcon className={styles.CartIcon} onClick={handleOpen} />
-              </div>
-
-              <div className={styles.productImage}>
-                <Image
-                  src="/715.jpg"
-                  alt="product-image"
-                  className={styles.image}
-                  width={900}
-                  height={900}
-                />
-              </div>
-
-              <div className={styles.productDescription}>
-                <div className={styles.description}>
-                  <h1>Price:</h1>
-                  <h1>Ghc 260.00</h1>
-                </div>
-
-                <div className={styles.readMore}>
-                  <button>Read More</button>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Aloe Vera For All Skin Types</h1>
-                <CartIcon className={styles.CartIcon} onClick={handleOpen} />
-              </div>
-
-              <div className={styles.productImage}>
-                <Image
-                  src="/90.jpeg"
-                  alt="product-image"
-                  className={styles.image}
-                  width={900}
-                  height={900}
-                />
-              </div>
-
-              <div className={styles.productDescription}>
-                <div className={styles.description}>
-                  <h1>Price:</h1>
-                  <h1>Ghc 260.00</h1>
-                </div>
-
-                <div className={styles.readMore}>
-                  <button>Read More</button>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Organic Aloe Vera Gel </h1>
-                <CartIcon className={styles.CartIcon} onClick={handleOpen} />
-              </div>
-
-              <div className={styles.productImage}>
-                <Image
-                  src="/80.jpg"
-                  alt="product-image"
-                  className={styles.image}
-                  width={900}
-                  height={900}
-                />
-              </div>
-
-              <div className={styles.productDescription}>
-                <div className={styles.description}>
-                  <h1>Price:</h1>
-                  <h1>Ghc 260.00</h1>
-                </div>
-
-                <div className={styles.readMore}>
-                  <button>Read More</button>
-                </div>
-              </div>
-            </div>
+          <div className={styles.activeComponent}>
+            {renderActiveComponent()}
           </div>
           <div className={styles.profileContainer}>
             <div className={styles.profilePhoto}>
@@ -266,11 +230,9 @@ function Index() {
             <div className={styles.profileName}>
               <h1>Welcome To Aloe Health Products</h1>
             </div>
-
             <div className={styles.profileEmail}>
               <h1>{user?.user.email}</h1>
             </div>
-
             <div className={styles.signOut} onClick={handleLogout}>
               <LogoutRounded className={styles.logoutIcon} />
               <h1>Logout</h1>
@@ -281,22 +243,118 @@ function Index() {
       <ToastContainer />
 
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openAddCart}
+        onClose={handleOpenAddCart}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 300 }}>
-          <h2 id="child-modal-title">Save Items</h2>
+          <h2 id="child-modal-title">Add to cart</h2>
           <p id="child-modal-description">
             Are you sure to save this item and buy later?
           </p>
           <Button>Add</Button>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleCloseAddCart}>Close</Button>
         </Box>
       </Modal>
+
+      <Modal
+        keepMounted
+        open={openProductDescription}
+        onClose={handleCloseProductDes}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box className={styles.productDesContainer}>
+          <div className={styles.productDesContainerHeader}>
+            <h1>Product Details</h1>
+            <h1 onClick={handleCloseProductDes}>Close</h1>
+          </div>
+
+          <div className={styles.productDesTextContainer}>
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesTextTitle}>
+                <p>
+                  To relax in the bedroom with the sunshine. Dream your dream
+                  with Hikers. Suitable for the bedroom, refused to boring life.
+                  Simple sense of lines, interpretation of modern home
+                  aesthetics, elegant and outstanding. House has the boundary
+                  however love is endless. Parents are happy for happy kids. Get
+                  closer with your family by one unit Hikers LED TV.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesTextTitle}>
+                <p>
+                  To relax in the bedroom with the sunshine. Dream your dream
+                  with Hikers. Suitable for the bedroom, refused to boring life.
+                  Simple sense of lines, interpretation of modern home
+                  aesthetics, elegant and outstanding. House has the boundary
+                  however love is endless. Parents are happy for happy kids. Get
+                  closer with your family by one unit Hikers LED TV.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesTextTitle}>
+                <p>
+                  To relax in the bedroom with the sunshine. Dream your dream
+                  with Hikers. Suitable for the bedroom, refused to boring life.
+                  Simple sense of lines, interpretation of modern home
+                  aesthetics, elegant and outstanding. House has the boundary
+                  however love is endless. Parents are happy for happy kids. Get
+                  closer with your family by one unit Hikers LED TV.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesTextTitle}>
+                <p>
+                  To relax in the bedroom with the sunshine. Dream your dream
+                  with Hikers. Suitable for the bedroom, refused to boring life.
+                  Simple sense of lines, interpretation of modern home
+                  aesthetics, elegant and outstanding. House has the boundary
+                  however love is endless. Parents are happy for happy kids. Get
+                  closer with your family by one unit Hikers LED TV.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Box>
+      </Modal>
+
+      {activeComponent === "videoHealthTips" && <VideoHealthTips />}
     </>
   );
 }
 
 export default Index;
+
+export const getServerSideProps = withSession(async function ({ req, res }) {
+  const user = req.session.get("user");
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  if (user) {
+    req.session.set("user", user);
+    await req.session.save();
+  }
+  return {
+    props: {
+      user: user,
+    },
+  };
+});
