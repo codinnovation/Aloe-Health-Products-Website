@@ -168,7 +168,12 @@
 
 .productImage .image {
   width: 60%;
-  height: 100%;
+  height: auto;
+}
+
+.productImage .video {
+  width: 100%;
+  height: auto;
 }
 
 .productDescription {
@@ -222,12 +227,12 @@
   justify-content: flex-start;
   align-items: center;
   padding: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 17px;
   cursor: pointer;
 }
 
 .category .catIcon {
-  font-size: 1em;
+  font-size: 1.3em;
   color: #f85a40;
 }
 
@@ -366,8 +371,13 @@
   }
 
   .productImage .image {
-    width: 70%;
-    height: 100%;
+    width: 60%;
+    height: auto;
+  }
+
+  .productImage .video {
+    width: 100%;
+    height: auto;
   }
 
   .productDescription {

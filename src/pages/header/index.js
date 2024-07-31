@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import styles from "../../styles/header.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
@@ -9,17 +10,21 @@ import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
-import SpaIcon from "@mui/icons-material/Spa";
-import DeckIcon from "@mui/icons-material/Deck";
-import ComputerIcon from "@mui/icons-material/Computer";
-import FoodBankIcon from "@mui/icons-material/FoodBank";
-import DiamondIcon from "@mui/icons-material/Diamond";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import Person from "@mui/icons-material/Person";
+import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
+import LogoutIcon from "@mui/icons-material/LogoutRounded";
+import GroupsIcon from "@mui/icons-material/Groups";
 import AloeLogo from "../../../public/logo-1.JPG";
 import Image from "next/image";
-import MoreIcon from "@mui/icons-material/More";
+import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
+import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Typography,
   Divider,
@@ -30,10 +35,36 @@ import {
   Avatar,
 } from "@mui/material";
 
-function Index() {
+function Index({ handleActiveComponent }) {
+  const router = useRouter();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const handleLogout = async (e) => {
+    setIsButtonClicked(true);
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        toast.success("Logout Successful");
+        router.push("/login");
+        setIsButtonClicked(false);
+      } else {
+        toast.error("Logout Failed");
+        setIsButtonClicked(false);
+      }
+    } catch (error) {
+      toast.error("Error Occurred");
+      setIsButtonClicked(false);
+    }
+  };
 
   const handleOpenCart = () => {
     setIsCartOpen(true);
@@ -94,109 +125,127 @@ function Index() {
 
   return (
     <>
+      {isButtonClicked && (
+        <>
+          <div className={styles.loadingContainer}>
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          </div>
+        </>
+      )}
       <div className={styles.headerContainer}>
         <div className={styles.headerContents}>
-            <div className={styles.storeNameContainer}>
-              <div className={styles.menuIcon}>
-                <MenuIcon onClick={() => setOpenMenu(true)} className={styles.iconMenu} />
-              </div>
-              <div className={styles.headerContainerlogo}>
-                <Image
-                  src={AloeLogo}
-                  alt="Aloe-Logo"
-                  width={900}
-                  height={900}
-                />
-              </div>
-
-              <div className={styles.searchContainer}>
-                <input placeholder="Search" />
-              </div>
+          <div className={styles.storeNameContainer}>
+            <div className={styles.menuIcon}>
+              <MenuIcon
+                onClick={() => setOpenMenu(true)}
+                className={styles.iconMenu}
+              />
+            </div>
+            <div className={styles.headerContainerlogo}>
+              <Image src={AloeLogo} alt="Aloe-Logo" width={900} height={900} />
             </div>
 
-            <div className={styles.linkContainer}>
-              <div className={styles.link}>
-                <HomeIcon className={styles.icon} />
-                <h1>Home</h1>
-              </div>
-
-              <Tooltip title="Saved Items">
-                <div className={styles.link} onClick={handleOpenCart}>
-                  <CartIcon className={styles.icon} />
-                  <h1>Cart</h1>
-                </div>
-              </Tooltip>
-
-              <Tooltip title="My Notifications">
-                <div className={styles.link} onClick={handleNotificationsClick}>
-                  <NotificationsIcon className={styles.icon} />
-                  <h1>Notifications</h1>
-                </div>
-              </Tooltip>
-
-              <Tooltip title="Contact Us">
-                <div className={styles.link}>
-                  <PhoneIcon className={styles.icon} />
-                  <h1>Contact</h1>
-                </div>
-              </Tooltip>
-
-              <Tooltip title="My Profile">
-                <div className={styles.link}>
-                  <PersonIcon className={styles.icon} />
-                  <h1>Me</h1>
-                </div>
-              </Tooltip>
+            <div className={styles.searchContainer}>
+              <input placeholder="Search" />
             </div>
           </div>
 
-          {openMenu && (
-            <>
-              <div className={styles.menuContainer}>
-                <div className={styles.menuHeader}>
-                  <h1>Categories</h1>
-                  <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
+          <div className={styles.linkContainer}>
+            <div className={styles.link}>
+              <HomeIcon className={styles.icon} />
+              <h1>Home</h1>
+            </div>
+
+            <Tooltip title="Saved Items">
+              <div className={styles.link} onClick={handleOpenCart}>
+                <CartIcon className={styles.icon} />
+                <h1>Cart</h1>
+              </div>
+            </Tooltip>
+
+            <Tooltip title="My Notifications">
+              <div className={styles.link} onClick={handleNotificationsClick}>
+                <NotificationsIcon className={styles.icon} />
+                <h1>Notifications</h1>
+              </div>
+            </Tooltip>
+
+            <Tooltip title="Contact Us">
+              <div className={styles.link}>
+                <PhoneIcon className={styles.icon} />
+                <h1>Contact</h1>
+              </div>
+            </Tooltip>
+
+            <Tooltip title="My Profile">
+              <div className={styles.link}>
+                <PersonIcon className={styles.icon} />
+                <h1>Me</h1>
+              </div>
+            </Tooltip>
+
+            <div className={styles.link} onClick={handleLogout}>
+              <LogoutIcon className={styles.icon} />
+              <h1>Logout</h1>
+            </div>
+          </div>
+        </div>
+
+        {openMenu && (
+          <>
+            <div className={styles.menuContainer}>
+              <div className={styles.menuHeader}>
+                <h1>Categories</h1>
+                <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
+              </div>
+
+              <div className={styles.menuNavigations}>
+                <div
+                  className={styles.link}
+                  onClick={() => handleActiveComponent("healthEducation")}
+                >
+                  <HealthAndSafetyIcon className={styles.linkIcon} />
+                  <Link href="">Health Education</Link>
                 </div>
 
-                <div className={styles.menuNavigations}>
-                  <div className={styles.link}>
-                    <SpaIcon className={styles.linkIcon} />
-                    <Link href="">Health & Wellness</Link>
-                  </div>
+                <div
+                  className={styles.link}
+                  onClick={() => handleActiveComponent("aloeDrinks")}
+                >
+                  <FreeBreakfastIcon className={styles.linkIcon} />
+                  <Link href="">Aloe Drinks</Link>
+                </div>
 
-                  <div className={styles.link}>
-                    <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Skincare</Link>
-                  </div>
+                <div className={styles.link}>
+                  <MedicationLiquidIcon className={styles.linkIcon} />
+                  <Link href="">Supplements</Link>
+                </div>
 
-                  <div className={styles.link}>
-                    <FoodBankIcon className={styles.linkIcon} />
-                    <Link href="">Hair Care</Link>
-                  </div>
+                <div className={styles.link}>
+                  <GroupsIcon className={styles.linkIcon} />
+                  <Link href="">Skincare</Link>
+                </div>
 
-                  <div className={styles.link}>
-                    <SpaIcon className={styles.linkIcon} />
-                    <Link href="">Personal Care</Link>
-                  </div>
+                <div className={styles.link}>
+                  <Person className={styles.linkIcon} />
+                  <Link href="">Personal Care</Link>
+                </div>
 
-                  <div className={styles.link}>
-                    <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Speical Products</Link>
-                  </div>
+                <div className={styles.link}>
+                  <MonitorWeightIcon className={styles.linkIcon} />
+                  <Link href="">Weight Management</Link>
+                </div>
 
-                  <div className={styles.link}>
-                    <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Suplements</Link>
-                  </div>
-
-                  <div className={styles.link}>
-                    <ComputerIcon className={styles.linkIcon} />
-                    <Link href="">Other Products</Link>
-                  </div>
+                <div className={styles.link}>
+                  <EmojiNatureIcon className={styles.linkIcon} />
+                  <Link href="">Bee Products</Link>
                 </div>
               </div>
-            </>
-          )}
+            </div>
+          </>
+        )}
       </div>
 
       <Modal
@@ -325,6 +374,7 @@ function Index() {
           </Box>
         </Box>
       </Modal>
+      <ToastContainer />
     </>
   );
 }
