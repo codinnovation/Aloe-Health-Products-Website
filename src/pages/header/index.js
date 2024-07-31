@@ -33,6 +33,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
+  Grid,
 } from "@mui/material";
 
 function Index({ handleActiveComponent }) {
@@ -41,6 +42,12 @@ function Index({ handleActiveComponent }) {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const cartArray = JSON.parse(localStorage.getItem("cartArray")) || [];
+    setCartItems(cartArray);
+  }, [cartItems]);
 
   const handleLogout = async (e) => {
     setIsButtonClicked(true);
@@ -69,6 +76,7 @@ function Index({ handleActiveComponent }) {
   const handleOpenCart = () => {
     setIsCartOpen(true);
   };
+
   const handleCloseCart = () => {
     setIsCartOpen(false);
   };
@@ -81,34 +89,17 @@ function Index({ handleActiveComponent }) {
     setIsNotificationsOpen(false);
   };
 
-  const cartItems = [
-    {
-      id: 1,
-      name: "Jordan 9 Retro",
-      desrciptions: "This jordan 9 Retro all sizes",
-      price: "$12.00",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/cod-shop-c1874.appspot.com/o/fridge.jpg?alt=media&token=3f4eabb5-a3a0-4d7e-a1cb-a77a3627d3cd",
-    },
+  const handleDeleteItem = (itemId) => {
+    const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
+    setCartItems(updatedCartItems);
+    localStorage.setItem("cartArray", JSON.stringify(updatedCartItems));
+    toast.success("Item removed from cart");
+  };
 
-    {
-      id: 1,
-      name: "Jordan 9 Retro",
-      desrciptions: "This jordan 9 Retro all sizes",
-      price: "$12.00",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/cod-shop-c1874.appspot.com/o/fridge.jpg?alt=media&token=3f4eabb5-a3a0-4d7e-a1cb-a77a3627d3cd",
-    },
-
-    {
-      id: 1,
-      name: "Jordan 9 Retro",
-      desrciptions: "This jordan 9 Retro all sizes",
-      price: "$12.00",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/cod-shop-c1874.appspot.com/o/fridge.jpg?alt=media&token=3f4eabb5-a3a0-4d7e-a1cb-a77a3627d3cd",
-    },
-  ];
+  const handleBuyItem = (item) => {
+    // Handle the buy item logic here
+    toast.success(`Bought ${item.productName}`);
+  };
 
   const notifications = [
     {
@@ -126,13 +117,11 @@ function Index({ handleActiveComponent }) {
   return (
     <>
       {isButtonClicked && (
-        <>
-          <div className={styles.loadingContainer}>
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          </div>
-        </>
+        <div className={styles.loadingContainer}>
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </div>
       )}
       <div className={styles.headerContainer}>
         <div className={styles.headerContents}>
@@ -160,6 +149,9 @@ function Index({ handleActiveComponent }) {
 
             <Tooltip title="Saved Items">
               <div className={styles.link} onClick={handleOpenCart}>
+                <div className={styles.numberOfCart}>
+                  <h1>{cartItems.length}</h1>
+                </div>
                 <CartIcon className={styles.icon} />
                 <h1>Cart</h1>
               </div>
@@ -280,29 +272,55 @@ function Index({ handleActiveComponent }) {
               marginTop: 2,
             }}
           >
-            {cartItems.map((item) => (
-              <ListItem key={item.id} disablePadding>
-                <ListItemAvatar>
-                  <Avatar alt={item.name} src={item.image} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={item.name}
-                  secondary={
-                    <>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <ListItem key={item.id} disablePadding>
+                  <ListItemAvatar>
+                    <Avatar alt={item.productName} src={item.productImage} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.productName}
+                    secondary={
+                      <>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {item.description}
+                        </Typography>
+                        <br />
+                        {item.productPrice}
+                      </>
+                    }
+                  />
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handleBuyItem(item)}
                       >
-                        {item.description}
-                      </Typography>
-                      <br />
-                      {item.price}
-                    </>
-                  }
-                />
-              </ListItem>
-            ))}
+                        Buy
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => handleDeleteItem(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                Your cart is empty.
+              </Typography>
+            )}
           </List>
 
           <Box
@@ -322,8 +340,8 @@ function Index({ handleActiveComponent }) {
       <Modal
         open={isNotificationsOpen}
         onClose={handleCloseNotifications}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="modal-notifications-title"
+        aria-describedby="modal-notifications-description"
       >
         <Box
           sx={{
@@ -338,7 +356,7 @@ function Index({ handleActiveComponent }) {
             p: 4,
           }}
         >
-          <Typography variant="h5" id="modal-modal-title" gutterBottom>
+          <Typography variant="h5" id="modal-notifications-title" gutterBottom>
             Notifications
           </Typography>
           <Divider />
@@ -351,14 +369,30 @@ function Index({ handleActiveComponent }) {
               marginTop: 2,
             }}
           >
-            {notifications.map((notification) => (
-              <ListItem key={notification.id} disablePadding>
-                <ListItemText
-                  primary={notification.message}
-                  secondary={notification.time}
-                />
-              </ListItem>
-            ))}
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <ListItem key={notification.id} disablePadding>
+                  <ListItemText
+                    primary={notification.message}
+                    secondary={
+                      <>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {notification.time}
+                        </Typography>
+                      </>
+                    }
+                  />
+                </ListItem>
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                No new notifications.
+              </Typography>
+            )}
           </List>
 
           <Box
