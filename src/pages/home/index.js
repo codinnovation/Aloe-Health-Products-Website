@@ -86,7 +86,6 @@ function Index() {
         }
       } catch (error) {
         console.error("Error fetching user:", error);
-        router.push("/login");
       }
     };
 

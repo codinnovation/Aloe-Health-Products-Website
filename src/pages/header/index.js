@@ -94,15 +94,19 @@ function Index() {
 
   return (
     <>
-      <div className={styles.homeContainer}>
-        <div className={styles.navigationContainer}>
-          <div className={styles.navigationContents}>
+      <div className={styles.headerContainer}>
+        <div className={styles.headerContents}>
             <div className={styles.storeNameContainer}>
               <div className={styles.menuIcon}>
-                <MenuIcon onClick={() => setOpenMenu(true)} />
+                <MenuIcon onClick={() => setOpenMenu(true)} className={styles.iconMenu} />
               </div>
-              <div className={styles.containerLogo}>
-                <Image src={AloeLogo} alt="Aloe-Logo" className={styles.img} />
+              <div className={styles.headerContainerlogo}>
+                <Image
+                  src={AloeLogo}
+                  alt="Aloe-Logo"
+                  width={900}
+                  height={900}
+                />
               </div>
 
               <div className={styles.searchContainer}>
@@ -160,7 +164,6 @@ function Index() {
                     <Link href="">Health & Wellness</Link>
                   </div>
 
-
                   <div className={styles.link}>
                     <ComputerIcon className={styles.linkIcon} />
                     <Link href="">Skincare</Link>
@@ -194,7 +197,6 @@ function Index() {
               </div>
             </>
           )}
-        </div>
       </div>
 
       <Modal
