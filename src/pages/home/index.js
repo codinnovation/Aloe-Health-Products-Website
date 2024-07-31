@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
+import FirstHeader from '../../pages/header'
 import styles from "../../styles/Home.module.css";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
 import Person from "@mui/icons-material/Person";
-import SpaIcon from "@mui/icons-material/Spa";
-import DeckIcon from "@mui/icons-material/Deck";
-import ComputerIcon from "@mui/icons-material/Computer";
-import FoodBankIcon from "@mui/icons-material/FoodBank";
-import DiamondIcon from "@mui/icons-material/Diamond";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import MoreIcon from "@mui/icons-material/More";
+import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
+import GroupsIcon from "@mui/icons-material/Groups";
 import { LogoutRounded } from "@mui/icons-material";
 import Layout from "../layout";
 import Box from "@mui/material/Box";
@@ -16,16 +14,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ref, get, onValue } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { auth, db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import VideoIcon from "@mui/icons-material/OndemandVideo";
+import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
+import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
 import withSession from "../api/session";
-import VideoHealthTips from "./videoHealthTips";
-import AnotherComponent from "./anotherComponent";
+import AloeDrinks from "./aloe-drinks";
 
-const style = {
+const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -46,7 +44,7 @@ function Index() {
   const [user, setUser] = useState(null);
   const router = useRouter();
   const [openAddCart, setOpenAddCart] = useState(false);
-  const [activeComponent, setActiveComponent] = useState("initialPage");
+  const [activeComponent, setActiveComponent] = useState("healthEducation");
 
   const handleOpenProductDes = () => setOpenProductDescription(true);
   const handleCloseProductDes = () => setOpenProductDescription(false);
@@ -118,45 +116,82 @@ function Index() {
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
-      case "videoHealthTips":
-        return <VideoHealthTips />;
-      case "anotherComponent":
-        return <AnotherComponent />;
+      case "aloeDrinks":
+        return <AloeDrinks />;
       default:
         return (
           <div className={styles.mainContainer}>
             <div className={styles.productContainerHeader}>
-              <h1>Showing: Aloe Products</h1>
+              <h1>Showing: Health Education</h1>
             </div>
-            {productData.map((product, index) => (
-              <div className={styles.productContainer} key={index}>
-                <div className={styles.productHeader}>
-                  <h1>{product.title}</h1>
-                  <CartIcon
-                    className={styles.CartIcon}
-                    onClick={handleOpenAddCart}
-                  />
-                </div>
-                <div className={styles.productImage}>
-                  <img
-                    src={product.productImage}
-                    alt="product-image"
-                    className={styles.image}
-                    width={900}
-                    height={900}
-                  />
-                </div>
-                <div className={styles.productDescription}>
-                  <div className={styles.description}>
-                    <h1>Price:</h1>
-                    <h1>{product.productPrice}</h1>
-                  </div>
-                  <div className={styles.readMore}>
-                    <button onClick={handleOpenProductDes}>Read More</button>
-                  </div>
+            <div className={styles.productContainer}>
+              <div className={styles.productHeader}>
+                <h1>Title Goes Here</h1>
+                <CartIcon
+                  className={styles.CartIcon}
+                  onClick={handleOpenAddCart}
+                />
+              </div>
+              <div className={styles.productImage}>
+                <video
+                  src="/health-video.mp4"
+                  controls
+                  alt="product-image"
+                  className={styles.video}
+                />
+              </div>
+              <div className={styles.productDescription}>
+                <div className={styles.readMore}>
+                  <button onClick={handleOpenProductDes}>Read More</button>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className={styles.productContainer}>
+              <div className={styles.productHeader}>
+                <h1>Title Goes Here</h1>
+                <CartIcon
+                  className={styles.CartIcon}
+                  onClick={handleOpenAddCart}
+                />
+              </div>
+              <div className={styles.productImage}>
+                <video
+                  src="/health-video.mp4"
+                  controls
+                  alt="product-image"
+                  className={styles.video}
+                />
+              </div>
+              <div className={styles.productDescription}>
+                <div className={styles.readMore}>
+                  <button onClick={handleOpenProductDes}>Read More</button>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.productContainer}>
+              <div className={styles.productHeader}>
+                <h1>Title Goes Here</h1>
+                <CartIcon
+                  className={styles.CartIcon}
+                  onClick={handleOpenAddCart}
+                />
+              </div>
+              <div className={styles.productImage}>
+                <video
+                  src="/health-video.mp4"
+                  controls
+                  alt="product-image"
+                  className={styles.video}
+                />
+              </div>
+              <div className={styles.productDescription}>
+                <div className={styles.readMore}>
+                  <button onClick={handleOpenProductDes}>Read More</button>
+                </div>
+              </div>
+            </div>
           </div>
         );
     }
@@ -165,58 +200,49 @@ function Index() {
   return (
     <>
       {isButtonClicked && (
-        <>
-          <div className={styles.loadingContainer}>
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          </div>
-        </>
+        <div className={styles.loadingContainer}>
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </div>
       )}
-      <Layout />
+      <FirstHeader handleActiveComponent={handleActiveComponent}/>
       <div className={styles.homeContainer}>
         <div className={styles.homeContents}>
           <div className={styles.categoriesContainer}>
             <div
               className={styles.category}
-              onClick={() => handleActiveComponent("initialPage")}
+              onClick={() => handleActiveComponent("healthEducation")}
             >
-              <SpaIcon className={styles.catIcon} />
-              <h1>Health & Wellness</h1>
+              <HealthAndSafetyIcon className={styles.catIcon} />
+              <h1>Health Education</h1>
+            </div>
+            <div
+              className={styles.category}
+              onClick={() => handleActiveComponent("aloeDrinks")}
+            >
+              <FreeBreakfastIcon className={styles.catIcon} />
+              <h1>Aloe Drinks</h1>
             </div>
             <div className={styles.category}>
-              <DeckIcon className={styles.catIcon} />
+              <MedicationLiquidIcon className={styles.catIcon} />
+              <h1>Supplements</h1>
+            </div>
+            <div className={styles.category}>
+              <GroupsIcon className={styles.catIcon} />
               <h1>Skincare</h1>
             </div>
             <div className={styles.category}>
-              <ComputerIcon className={styles.catIcon} />
-              <h1>Hair Care</h1>
-            </div>
-            <div className={styles.category}>
-              <FoodBankIcon className={styles.catIcon} />
+              <Person className={styles.catIcon} />
               <h1>Personal Care</h1>
             </div>
             <div className={styles.category}>
-              <DiamondIcon className={styles.catIcon} />
-              <h1>Specialty Products</h1>
+              <MonitorWeightIcon className={styles.catIcon} />
+              <h1>Weight Management</h1>
             </div>
             <div className={styles.category}>
-              <FitnessCenterIcon className={styles.catIcon} />
-              <h1>Supplements</h1>
-            </div>
-            <div
-              className={styles.category}
-              onClick={() => handleActiveComponent("videoHealthTips")}
-            >
-              <VideoIcon className={styles.catIcon} />
-              <h1>Health Tips</h1>
-            </div>
-            <div
-              className={styles.category}
-              onClick={() => handleActiveComponent("anotherComponent")}
-            >
-              <MoreIcon className={styles.catIcon} />
-              <h1>Another Component</h1>
+              <EmojiNatureIcon className={styles.catIcon} />
+              <h1>Bee Products</h1>
             </div>
           </div>
           <div className={styles.activeComponent}>
@@ -240,14 +266,13 @@ function Index() {
         </div>
       </div>
       <ToastContainer />
-
       <Modal
         open={openAddCart}
-        onClose={handleOpenAddCart}
+        onClose={handleCloseAddCart}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 300 }}>
+        <Box sx={{ ...modalStyle, width: 300 }}>
           <h2 id="child-modal-title">Add to cart</h2>
           <p id="child-modal-description">
             Are you sure to save this item and buy later?
@@ -256,7 +281,6 @@ function Index() {
           <Button onClick={handleCloseAddCart}>Close</Button>
         </Box>
       </Modal>
-
       <Modal
         keepMounted
         open={openProductDescription}
@@ -269,76 +293,30 @@ function Index() {
             <h1>Product Details</h1>
             <h1 onClick={handleCloseProductDes}>Close</h1>
           </div>
-
           <div className={styles.productDesTextContainer}>
             <div className={styles.productDesText}>
               <h1>Title Here</h1>
-              <div className={styles.productDesTextTitle}>
-                <p>
-                  To relax in the bedroom with the sunshine. Dream your dream
-                  with Hikers. Suitable for the bedroom, refused to boring life.
-                  Simple sense of lines, interpretation of modern home
-                  aesthetics, elegant and outstanding. House has the boundary
-                  however love is endless. Parents are happy for happy kids. Get
-                  closer with your family by one unit Hikers LED TV.
-                </p>
+              <div className={styles.productDesImage}>
+                <img src="/meditation.jpg" alt="product-image" />
               </div>
-            </div>
-
-            <div className={styles.productDesText}>
-              <h1>Title Here</h1>
-              <div className={styles.productDesTextTitle}>
-                <p>
-                  To relax in the bedroom with the sunshine. Dream your dream
-                  with Hikers. Suitable for the bedroom, refused to boring life.
-                  Simple sense of lines, interpretation of modern home
-                  aesthetics, elegant and outstanding. House has the boundary
-                  however love is endless. Parents are happy for happy kids. Get
-                  closer with your family by one unit Hikers LED TV.
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.productDesText}>
-              <h1>Title Here</h1>
-              <div className={styles.productDesTextTitle}>
-                <p>
-                  To relax in the bedroom with the sunshine. Dream your dream
-                  with Hikers. Suitable for the bedroom, refused to boring life.
-                  Simple sense of lines, interpretation of modern home
-                  aesthetics, elegant and outstanding. House has the boundary
-                  however love is endless. Parents are happy for happy kids. Get
-                  closer with your family by one unit Hikers LED TV.
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.productDesText}>
-              <h1>Title Here</h1>
-              <div className={styles.productDesTextTitle}>
-                <p>
-                  To relax in the bedroom with the sunshine. Dream your dream
-                  with Hikers. Suitable for the bedroom, refused to boring life.
-                  Simple sense of lines, interpretation of modern home
-                  aesthetics, elegant and outstanding. House has the boundary
-                  however love is endless. Parents are happy for happy kids. Get
-                  closer with your family by one unit Hikers LED TV.
-                </p>
-              </div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+                necessitatibus, commodi exercitationem atque labore dicta ipsum,
+                error corrupti, accusamus fugiat veniam incidunt.
+              </p>
             </div>
           </div>
         </Box>
       </Modal>
-
-      {activeComponent === "videoHealthTips" && <VideoHealthTips />}
     </>
   );
 }
 
 export default Index;
 
-export const getServerSideProps = withSession(async function ({ req, res }) {
+export const getServerSideProps = withSession(async ({ req, res }) => {
   const user = req.session.get("user");
+
   if (!user) {
     return {
       redirect: {
@@ -347,13 +325,8 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
       },
     };
   }
-  if (user) {
-    req.session.set("user", user);
-    await req.session.save();
-  }
+
   return {
-    props: {
-      user: user,
-    },
+    props: { user },
   };
 });
