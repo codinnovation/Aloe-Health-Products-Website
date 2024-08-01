@@ -24,7 +24,9 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+
 import {
   Typography,
   Divider,
@@ -160,7 +162,7 @@ function Index({ handleActiveComponent }) {
             <Tooltip title="My Notifications">
               <div className={styles.link} onClick={handleNotificationsClick}>
                 <NotificationsIcon className={styles.icon} />
-                <h1>Notifications</h1>
+                <h1>News/Update</h1>
               </div>
             </Tooltip>
 
@@ -171,17 +173,7 @@ function Index({ handleActiveComponent }) {
               </div>
             </Tooltip>
 
-            <Tooltip title="My Profile">
-              <div className={styles.link}>
-                <PersonIcon className={styles.icon} />
-                <h1>Me</h1>
-              </div>
-            </Tooltip>
-
-            <div className={styles.link} onClick={handleLogout}>
-              <LogoutIcon className={styles.icon} />
-              <h1>Logout</h1>
-            </div>
+        
           </div>
         </div>
 

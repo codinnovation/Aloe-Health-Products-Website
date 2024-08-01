@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FirstHeader from '../../pages/header'
+import FirstHeader from "../../pages/header";
 import styles from "../../styles/Home.module.css";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
 import Person from "@mui/icons-material/Person";
@@ -7,20 +7,17 @@ import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { LogoutRounded } from "@mui/icons-material";
-import Layout from "../layout";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ref, onValue } from "firebase/database";
-import { auth, db } from "../../../firebase.config";
+import {db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
 import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
-import withSession from "../api/session";
 import AloeDrinks from "./aloe-drinks";
 
 const modalStyle = {
@@ -41,7 +38,6 @@ function Index() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [productData, setProductData] = useState([]);
   const [openProductDescription, setOpenProductDescription] = useState(false);
-  const [user, setUser] = useState(null);
   const router = useRouter();
   const [openAddCart, setOpenAddCart] = useState(false);
   const [activeComponent, setActiveComponent] = useState("healthEducation");
@@ -72,47 +68,9 @@ function Index() {
     });
   }, []);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("/api/user");
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        } else {
-          throw new Error("Failed to fetch user data");
-        }
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
 
-    fetchUser();
-  }, [router]);
 
-  const handleLogout = async (e) => {
-    setIsButtonClicked(true);
-    try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
 
-      if (response.ok) {
-        toast.success("Logout Successful");
-        router.push("/login");
-        setIsButtonClicked(false);
-      } else {
-        toast.error("Logout Failed");
-        setIsButtonClicked(false);
-      }
-    } catch (error) {
-      toast.error("Error Occurred");
-      setIsButtonClicked(false);
-    }
-  };
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -206,7 +164,7 @@ function Index() {
           </Box>
         </div>
       )}
-      <FirstHeader handleActiveComponent={handleActiveComponent}/>
+      <FirstHeader handleActiveComponent={handleActiveComponent} />
       <div className={styles.homeContainer}>
         <div className={styles.homeContents}>
           <div className={styles.categoriesContainer}>
@@ -254,13 +212,6 @@ function Index() {
             </div>
             <div className={styles.profileName}>
               <h1>Welcome To Aloe Health Products</h1>
-            </div>
-            <div className={styles.profileEmail}>
-              <h1>{user?.user.email}</h1>
-            </div>
-            <div className={styles.signOut} onClick={handleLogout}>
-              <LogoutRounded className={styles.logoutIcon} />
-              <h1>Logout</h1>
             </div>
           </div>
         </div>
@@ -313,20 +264,3 @@ function Index() {
 }
 
 export default Index;
-
-export const getServerSideProps = withSession(async ({ req, res }) => {
-  const user = req.session.get("user");
-
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user },
-  };
-});
