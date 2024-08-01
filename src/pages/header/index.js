@@ -1,30 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/header.module.css";
-import HomeIcon from "@mui/icons-material/Home";
-import CartIcon from "@mui/icons-material/AddShoppingCart";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import PhoneIcon from "@mui/icons-material/Phone";
-import Tooltip from "@mui/material/Tooltip";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
-import Person from "@mui/icons-material/Person";
-import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
-import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
-import GroupsIcon from "@mui/icons-material/Groups";
-import AloeLogo from "../../../public/logo-1.JPG";
-import Image from "next/image";
-import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
-import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import TextField from "@mui/material/TextField";
-import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
+  Home as HomeIcon,
+  AddShoppingCart as CartIcon,
+  Notifications as NotificationsIcon,
+  Phone as PhoneIcon,
+  Menu as MenuIcon,
+  Person,
+  MedicationLiquid as MedicationLiquidIcon,
+  HealthAndSafety as HealthAndSafetyIcon,
+  MonitorWeight as MonitorWeightIcon,
+  Groups as GroupsIcon,
+  EmojiNature as EmojiNatureIcon,
+  FreeBreakfast as FreeBreakfastIcon,
+} from "@mui/icons-material";
+import {
+  Tooltip,
+  Modal,
+  Button,
+  Box,
+  CircularProgress,
+  TextField,
   Typography,
   Divider,
   List,
@@ -34,6 +31,11 @@ import {
   Avatar,
   Grid,
 } from "@mui/material";
+import Image from "next/image";
+import AloeLogo from "../../../public/logo-1.JPG";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 function Index({ handleActiveComponent }) {
   const router = useRouter();
@@ -47,9 +49,9 @@ function Index({ handleActiveComponent }) {
   useEffect(() => {
     const cartArray = JSON.parse(localStorage.getItem("cartArray")) || [];
     setCartItems(cartArray);
-  }, [cartItems]);
+  }, []);
 
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     setIsButtonClicked(true);
     try {
       const response = await fetch("/api/logout", {
@@ -62,31 +64,14 @@ function Index({ handleActiveComponent }) {
       if (response.ok) {
         toast.success("Logout Successful");
         router.push("/login");
-        setIsButtonClicked(false);
       } else {
         toast.error("Logout Failed");
-        setIsButtonClicked(false);
       }
     } catch (error) {
       toast.error("Error Occurred");
+    } finally {
       setIsButtonClicked(false);
     }
-  };
-
-  const handleOpenCart = () => {
-    setIsCartOpen(true);
-  };
-
-  const handleCloseCart = () => {
-    setIsCartOpen(false);
-  };
-
-  const handleNotificationsClick = () => {
-    setIsNotificationsOpen(true);
-  };
-
-  const handleCloseNotifications = () => {
-    setIsNotificationsOpen(false);
   };
 
   const handleDeleteItem = (itemId) => {
@@ -97,21 +82,12 @@ function Index({ handleActiveComponent }) {
   };
 
   const handleBuyItem = (item) => {
-    // Handle the buy item logic here
     toast.success(`Bought ${item.productName}`);
   };
 
   const notifications = [
-    {
-      id: 1,
-      message: "New order received.",
-      time: "2 minutes ago",
-    },
-    {
-      id: 2,
-      message: "Your item has been shipped.",
-      time: "1 hour ago",
-    },
+    { id: 1, message: "New order received.", time: "2 minutes ago" },
+    { id: 2, message: "Your item has been shipped.", time: "1 hour ago" },
   ];
 
   return (
@@ -135,7 +111,6 @@ function Index({ handleActiveComponent }) {
             <div className={styles.headerContainerlogo}>
               <Image src={AloeLogo} alt="Aloe-Logo" width={900} height={900} />
             </div>
-
             <div className={styles.searchContainer}>
               <input placeholder="Search" />
             </div>
@@ -146,9 +121,8 @@ function Index({ handleActiveComponent }) {
               <HomeIcon className={styles.icon} />
               <h1>Home</h1>
             </div>
-
             <Tooltip title="Saved Items">
-              <div className={styles.link} onClick={handleOpenCart}>
+              <div className={styles.link} onClick={() => setIsCartOpen(true)}>
                 <div className={styles.numberOfCart}>
                   <h1>{cartItems.length}</h1>
                 </div>
@@ -156,14 +130,15 @@ function Index({ handleActiveComponent }) {
                 <h1>Cart</h1>
               </div>
             </Tooltip>
-
             <Tooltip title="My Notifications">
-              <div className={styles.link} onClick={handleNotificationsClick}>
+              <div
+                className={styles.link}
+                onClick={() => setIsNotificationsOpen(true)}
+              >
                 <NotificationsIcon className={styles.icon} />
                 <h1>News</h1>
               </div>
             </Tooltip>
-
             <Tooltip title="Contact Us">
               <div className={styles.link}>
                 <PhoneIcon className={styles.icon} />
@@ -174,65 +149,55 @@ function Index({ handleActiveComponent }) {
         </div>
 
         {openMenu && (
-          <>
-            <div className={styles.menuContainer}>
-              <div className={styles.menuHeader}>
-                <h1>Categories</h1>
-                <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
+          <div className={styles.menuContainer}>
+            <div className={styles.menuHeader}>
+              <h1>Categories</h1>
+              <h1 onClick={() => setOpenMenu(false)}>&times;</h1>
+            </div>
+            <div className={styles.menuNavigations}>
+              <div
+                className={styles.link}
+                onClick={() => handleActiveComponent("healthEducation")}
+              >
+                <HealthAndSafetyIcon className={styles.linkIcon} />
+                <Link href="">Health Education</Link>
               </div>
-
-              <div className={styles.menuNavigations}>
-                <div
-                  className={styles.link}
-                  onClick={() => handleActiveComponent("healthEducation")}
-                >
-                  <HealthAndSafetyIcon className={styles.linkIcon} />
-                  <Link href="">Health Education</Link>
-                </div>
-
-                <div
-                  className={styles.link}
-                  onClick={() => handleActiveComponent("aloeDrinks")}
-                >
-                  <FreeBreakfastIcon className={styles.linkIcon} />
-                  <Link href="">Aloe Drinks</Link>
-                </div>
-
-                <div className={styles.link}>
-                  <MedicationLiquidIcon className={styles.linkIcon} />
-                  <Link href="">Supplements</Link>
-                </div>
-
-                <div className={styles.link}>
-                  <GroupsIcon className={styles.linkIcon} />
-                  <Link href="">Skincare</Link>
-                </div>
-
-                <div className={styles.link}>
-                  <Person className={styles.linkIcon} />
-                  <Link href="">Personal Care</Link>
-                </div>
-
-                <div className={styles.link}>
-                  <MonitorWeightIcon className={styles.linkIcon} />
-                  <Link href="">Weight Management</Link>
-                </div>
-
-                <div className={styles.link}>
-                  <EmojiNatureIcon className={styles.linkIcon} />
-                  <Link href="">Bee Products</Link>
-                </div>
+              <div
+                className={styles.link}
+                onClick={() => handleActiveComponent("aloeDrinks")}
+              >
+                <FreeBreakfastIcon className={styles.linkIcon} />
+                <Link href="">Aloe Drinks</Link>
+              </div>
+              <div className={styles.link}>
+                <MedicationLiquidIcon className={styles.linkIcon} />
+                <Link href="">Supplements</Link>
+              </div>
+              <div className={styles.link}>
+                <GroupsIcon className={styles.linkIcon} />
+                <Link href="">Skincare</Link>
+              </div>
+              <div className={styles.link}>
+                <Person className={styles.linkIcon} />
+                <Link href="">Personal Care</Link>
+              </div>
+              <div className={styles.link}>
+                <MonitorWeightIcon className={styles.linkIcon} />
+                <Link href="">Weight Management</Link>
+              </div>
+              <div className={styles.link}>
+                <EmojiNatureIcon className={styles.linkIcon} />
+                <Link href="">Bee Products</Link>
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
 
       <Modal
         open={isCartOpen}
-        onClose={handleCloseCart}
+        onClose={() => setIsCartOpen(false)}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Box
           sx={{
@@ -251,7 +216,6 @@ function Index({ handleActiveComponent }) {
             Your Cart
           </Typography>
           <Divider />
-
           <List
             sx={{
               width: "100%",
@@ -287,7 +251,7 @@ function Index({ handleActiveComponent }) {
                       <Button
                         variant="outlined"
                         color="primary"
-                        onClick={() => setSubmitCart(true)}
+                        onClick={() => handleBuyItem(item)}
                       >
                         Buy
                       </Button>
@@ -310,12 +274,11 @@ function Index({ handleActiveComponent }) {
               </Typography>
             )}
           </List>
-
           <Box
             sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}
           >
             <Button
-              onClick={handleCloseCart}
+              onClick={() => setIsCartOpen(false)}
               color="primary"
               variant="contained"
             >
@@ -327,9 +290,8 @@ function Index({ handleActiveComponent }) {
 
       <Modal
         open={isNotificationsOpen}
-        onClose={handleCloseNotifications}
+        onClose={() => setIsNotificationsOpen(false)}
         aria-labelledby="modal-notifications-title"
-        aria-describedby="modal-notifications-description"
       >
         <Box
           sx={{
@@ -348,7 +310,6 @@ function Index({ handleActiveComponent }) {
             Notifications
           </Typography>
           <Divider />
-
           <List
             sx={{
               width: "100%",
@@ -363,15 +324,13 @@ function Index({ handleActiveComponent }) {
                   <ListItemText
                     primary={notification.message}
                     secondary={
-                      <>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          {notification.time}
-                        </Typography>
-                      </>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {notification.time}
+                      </Typography>
                     }
                   />
                 </ListItem>
@@ -382,12 +341,11 @@ function Index({ handleActiveComponent }) {
               </Typography>
             )}
           </List>
-
           <Box
             sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}
           >
             <Button
-              onClick={handleCloseNotifications}
+              onClick={() => setIsNotificationsOpen(false)}
               color="primary"
               variant="contained"
             >
@@ -418,7 +376,6 @@ function Index({ handleActiveComponent }) {
           <TextField id="filled-basic" label="Name" variant="filled" />
           <TextField id="filled-basic" label="Phone" variant="filled" />
           <TextField id="filled-basic" label="Location" variant="filled" />
-
           <Button>Buy</Button>
         </Box>
       </Modal>
