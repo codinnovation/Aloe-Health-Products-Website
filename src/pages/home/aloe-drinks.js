@@ -6,11 +6,9 @@ import { ref, onValue } from "firebase/database";
 import { db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";import Button from "@mui/material/Button";
-import {
-  NotificationManager,
-  NotificationContainer,
-} from "react-notifications";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import { NotificationManager, NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
 const modalStyle = {
@@ -18,7 +16,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 300,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -33,11 +31,11 @@ function AloeDrinks() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   const handleOpenAddCart = (product) => {
     setSelectedProduct(product);
     setOpenAddCart(true);
   };
+
   const handleCloseAddCart = () => {
     setOpenAddCart(false);
     setSelectedProduct(null);
@@ -65,23 +63,21 @@ function AloeDrinks() {
 
   return (
     <>
-     {isSubmitting && (
-        <>
-          <div className={styles.loadingContainer}>
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          </div>
-        </>
+      {isSubmitting && (
+        <div className={styles.loadingContainer}>
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </div>
       )}
       <div className={styles.mainContainer}>
         <div className={styles.productContainerHeader}>
           <h1>Showing: Aloe Drinks</h1>
         </div>
-        {productData.map((product, index) => (
-          <div className={styles.productContainer} key={index}>
+        {productData.map((product) => (
+          <div className={styles.productContainer} key={product.id}>
             <div className={styles.productHeader}>
-              <h1>{product?.productName}</h1>
+              <h1>{product.productName}</h1>
               <CartIcon
                 className={styles.CartIcon}
                 onClick={() => handleOpenAddCart(product)}
@@ -89,15 +85,15 @@ function AloeDrinks() {
             </div>
             <div className={styles.productImage}>
               <img
-                src={product?.productImage}
-                alt="product-image"
+                src={product.productImage}
+                alt={product.productName}
                 className={styles.image}
               />
             </div>
             <div className={styles.productDescription}>
               <div className={styles.description}>
                 <h1>Price:</h1>
-                <h1>{`Ghc${product?.productPrice}`}</h1>
+                <h1>{`Ghc${product.productPrice}`}</h1>
               </div>
               <div className={styles.readMore}>
                 <button>Read More</button>
@@ -110,20 +106,24 @@ function AloeDrinks() {
       <Modal
         open={openAddCart}
         onClose={handleCloseAddCart}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
+        aria-labelledby="add-to-cart-modal-title"
+        aria-describedby="add-to-cart-modal-description"
       >
-        <Box sx={{ ...modalStyle, width: 300 }}>
-          <h2 id="child-modal-title">Add to cart</h2>
-          <p id="child-modal-description">
-            Are you sure to save this item and buy later?
+        <Box sx={modalStyle}>
+          <h2 id="add-to-cart-modal-title">Add to cart</h2>
+          <p id="add-to-cart-modal-description">
+            Are you sure you want to add this item to your cart and buy later?
           </p>
-          <Button onClick={addToCart}>Add</Button>
-          <Button onClick={handleCloseAddCart}>Close</Button>
+          <Button onClick={addToCart} variant="contained" color="primary">
+            Add
+          </Button>
+          <Button onClick={handleCloseAddCart} variant="outlined" color="secondary">
+            Close
+          </Button>
         </Box>
       </Modal>
 
-      <NotificationContainer/>
+      <NotificationContainer />
     </>
   );
 }

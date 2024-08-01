@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ref, onValue } from "firebase/database";
-import {db } from "../../../firebase.config";
+import { db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
@@ -25,7 +25,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 300,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -38,23 +38,16 @@ function Index() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [productData, setProductData] = useState([]);
   const [openProductDescription, setOpenProductDescription] = useState(false);
-  const router = useRouter();
   const [openAddCart, setOpenAddCart] = useState(false);
   const [activeComponent, setActiveComponent] = useState("healthEducation");
 
   const handleOpenProductDes = () => setOpenProductDescription(true);
   const handleCloseProductDes = () => setOpenProductDescription(false);
 
-  const handleActiveComponent = (active) => {
-    setActiveComponent(active);
-  };
+  const handleOpenAddCart = () => setOpenAddCart(true);
+  const handleCloseAddCart = () => setOpenAddCart(false);
 
-  const handleOpenAddCart = () => {
-    setOpenAddCart(true);
-  };
-  const handleCloseAddCart = () => {
-    setOpenAddCart(false);
-  };
+  const handleActiveComponent = (active) => setActiveComponent(active);
 
   useEffect(() => {
     const productRef = ref(db, "sneakers");
@@ -68,10 +61,6 @@ function Index() {
     });
   }, []);
 
-
-
-
-
   const renderActiveComponent = () => {
     switch (activeComponent) {
       case "aloeDrinks":
@@ -82,74 +71,29 @@ function Index() {
             <div className={styles.productContainerHeader}>
               <h1>Showing: Health Education</h1>
             </div>
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Title Goes Here</h1>
-                <CartIcon
-                  className={styles.CartIcon}
-                  onClick={handleOpenAddCart}
-                />
-              </div>
-              <div className={styles.productImage}>
-                <video
-                  src="/health-video.mp4"
-                  controls
-                  alt="product-image"
-                  className={styles.video}
-                />
-              </div>
-              <div className={styles.productDescription}>
-                <div className={styles.readMore}>
-                  <button onClick={handleOpenProductDes}>Read More</button>
+            {Array(3).fill().map((_, index) => (
+              <div className={styles.productContainer} key={index}>
+                <div className={styles.productHeader}>
+                  <h1>Title Goes Here</h1>
+                  <CartIcon
+                    className={styles.CartIcon}
+                    onClick={handleOpenAddCart}
+                  />
+                </div>
+                <div className={styles.productImage}>
+                  <video
+                    src="/health-video.mp4"
+                    controls
+                    className={styles.video}
+                  />
+                </div>
+                <div className={styles.productDescription}>
+                  <div className={styles.readMore}>
+                    <button onClick={handleOpenProductDes}>Read More</button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Title Goes Here</h1>
-                <CartIcon
-                  className={styles.CartIcon}
-                  onClick={handleOpenAddCart}
-                />
-              </div>
-              <div className={styles.productImage}>
-                <video
-                  src="/health-video.mp4"
-                  controls
-                  alt="product-image"
-                  className={styles.video}
-                />
-              </div>
-              <div className={styles.productDescription}>
-                <div className={styles.readMore}>
-                  <button onClick={handleOpenProductDes}>Read More</button>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.productContainer}>
-              <div className={styles.productHeader}>
-                <h1>Title Goes Here</h1>
-                <CartIcon
-                  className={styles.CartIcon}
-                  onClick={handleOpenAddCart}
-                />
-              </div>
-              <div className={styles.productImage}>
-                <video
-                  src="/health-video.mp4"
-                  controls
-                  alt="product-image"
-                  className={styles.video}
-                />
-              </div>
-              <div className={styles.productDescription}>
-                <div className={styles.readMore}>
-                  <button onClick={handleOpenProductDes}>Read More</button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         );
     }
@@ -168,40 +112,24 @@ function Index() {
       <div className={styles.homeContainer}>
         <div className={styles.homeContents}>
           <div className={styles.categoriesContainer}>
-            <div
-              className={styles.category}
-              onClick={() => handleActiveComponent("healthEducation")}
-            >
-              <HealthAndSafetyIcon className={styles.catIcon} />
-              <h1>Health Education</h1>
-            </div>
-            <div
-              className={styles.category}
-              onClick={() => handleActiveComponent("aloeDrinks")}
-            >
-              <FreeBreakfastIcon className={styles.catIcon} />
-              <h1>Aloe Drinks</h1>
-            </div>
-            <div className={styles.category}>
-              <MedicationLiquidIcon className={styles.catIcon} />
-              <h1>Supplements</h1>
-            </div>
-            <div className={styles.category}>
-              <GroupsIcon className={styles.catIcon} />
-              <h1>Skincare</h1>
-            </div>
-            <div className={styles.category}>
-              <Person className={styles.catIcon} />
-              <h1>Personal Care</h1>
-            </div>
-            <div className={styles.category}>
-              <MonitorWeightIcon className={styles.catIcon} />
-              <h1>Weight Management</h1>
-            </div>
-            <div className={styles.category}>
-              <EmojiNatureIcon className={styles.catIcon} />
-              <h1>Bee Products</h1>
-            </div>
+            {[
+              { name: "Health Education", icon: <HealthAndSafetyIcon /> },
+              { name: "Aloe Drinks", icon: <FreeBreakfastIcon /> },
+              { name: "Supplements", icon: <MedicationLiquidIcon /> },
+              { name: "Skincare", icon: <GroupsIcon /> },
+              { name: "Personal Care", icon: <Person /> },
+              { name: "Weight Management", icon: <MonitorWeightIcon /> },
+              { name: "Bee Products", icon: <EmojiNatureIcon /> }
+            ].map((category, index) => (
+              <div
+                className={styles.category}
+                key={index}
+                onClick={() => handleActiveComponent(category.name.toLowerCase().replace(" ", ""))}
+              >
+                {React.cloneElement(category.icon, { className: styles.catIcon })}
+                <h1>{category.name}</h1>
+              </div>
+            ))}
           </div>
           <div className={styles.activeComponent}>
             {renderActiveComponent()}
@@ -220,35 +148,34 @@ function Index() {
       <Modal
         open={openAddCart}
         onClose={handleCloseAddCart}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
+        aria-labelledby="add-to-cart-modal-title"
+        aria-describedby="add-to-cart-modal-description"
       >
-        <Box sx={{ ...modalStyle, width: 300 }}>
-          <h2 id="child-modal-title">Add to cart</h2>
-          <p id="child-modal-description">
-            Are you sure to save this item and buy later?
+        <Box sx={modalStyle}>
+          <h2 id="add-to-cart-modal-title">Add to cart</h2>
+          <p id="add-to-cart-modal-description">
+            Are you sure you want to save this item and buy later?
           </p>
-          <Button>Add</Button>
-          <Button onClick={handleCloseAddCart}>Close</Button>
+          <Button variant="contained" color="primary" onClick={() => toast.success("Added to cart!")}>Add</Button>
+          <Button variant="outlined" color="secondary" onClick={handleCloseAddCart}>Close</Button>
         </Box>
       </Modal>
       <Modal
         keepMounted
         open={openProductDescription}
         onClose={handleCloseProductDes}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
+        aria-labelledby="product-description-modal-title"
+        aria-describedby="product-description-modal-description"
       >
-        <Box className={styles.productDesContainer}>
+        <Box sx={modalStyle}>
           <div className={styles.productDesContainerHeader}>
-            <h1>Product Details</h1>
-            <h1 onClick={handleCloseProductDes}>Close</h1>
+            <h1 id="product-description-modal-title">Product Details</h1>
+            <h1 onClick={handleCloseProductDes} style={{ cursor: 'pointer' }}>Close</h1>
           </div>
           <div className={styles.productDesTextContainer}>
             <div className={styles.productDesText}>
               <h1>Title Here</h1>
-              <div className={styles.productDesImage}>
-              </div>
+              <div className={styles.productDesImage}></div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
                 necessitatibus, commodi exercitationem atque labore dicta ipsum,
