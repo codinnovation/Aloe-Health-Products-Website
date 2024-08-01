@@ -248,7 +248,6 @@ function Index() {
             <div className={styles.productDesText}>
               <h1>Title Here</h1>
               <div className={styles.productDesImage}>
-                <img src="/meditation.jpg" alt="product-image" />
               </div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet

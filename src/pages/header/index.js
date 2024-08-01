@@ -4,7 +4,6 @@ import styles from "../../styles/header.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
@@ -14,7 +13,6 @@ import Person from "@mui/icons-material/Person";
 import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
-import LogoutIcon from "@mui/icons-material/LogoutRounded";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AloeLogo from "../../../public/logo-1.JPG";
 import Image from "next/image";
@@ -22,11 +20,10 @@ import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
 import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
+import TextField from "@mui/material/TextField";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   Typography,
   Divider,
@@ -45,6 +42,7 @@ function Index({ handleActiveComponent }) {
   const [openMenu, setOpenMenu] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [submitCart, setSubmitCart] = useState(false);
 
   useEffect(() => {
     const cartArray = JSON.parse(localStorage.getItem("cartArray")) || [];
@@ -162,7 +160,7 @@ function Index({ handleActiveComponent }) {
             <Tooltip title="My Notifications">
               <div className={styles.link} onClick={handleNotificationsClick}>
                 <NotificationsIcon className={styles.icon} />
-                <h1>News/Update</h1>
+                <h1>News</h1>
               </div>
             </Tooltip>
 
@@ -172,8 +170,6 @@ function Index({ handleActiveComponent }) {
                 <h1>Contact</h1>
               </div>
             </Tooltip>
-
-        
           </div>
         </div>
 
@@ -291,7 +287,7 @@ function Index({ handleActiveComponent }) {
                       <Button
                         variant="outlined"
                         color="primary"
-                        onClick={() => handleBuyItem(item)}
+                        onClick={() => setSubmitCart(true)}
                       >
                         Buy
                       </Button>
@@ -400,6 +396,33 @@ function Index({ handleActiveComponent }) {
           </Box>
         </Box>
       </Modal>
+
+      <Modal open={submitCart} onClose={() => setSubmitCart(false)}>
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch" },
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 600,
+            maxWidth: "90%",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField id="filled-basic" label="Name" variant="filled" />
+          <TextField id="filled-basic" label="Phone" variant="filled" />
+          <TextField id="filled-basic" label="Location" variant="filled" />
+
+          <Button>Buy</Button>
+        </Box>
+      </Modal>
+
       <ToastContainer />
     </>
   );
