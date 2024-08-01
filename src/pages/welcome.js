@@ -33,7 +33,6 @@ function Welcome() {
       <div className={styles.welcomeText}>
         <h1>Aloe Health Products</h1>
       </div>
-      <div className={styles.counter}>{count}%</div>
     </div>
   );
 }
