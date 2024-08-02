@@ -36,6 +36,10 @@ import AloeLogo from "../../../public/logo-1.JPG";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import Facebook from "@mui/icons-material/Facebook";
+import Email from "@mui/icons-material/Email";
+import Twitter from "@mui/icons-material/Twitter"
+import WhatsApp from "@mui/icons-material/WhatsApp";
 
 function Index({ handleActiveComponent }) {
   const router = useRouter();
@@ -45,6 +49,12 @@ function Index({ handleActiveComponent }) {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [submitCart, setSubmitCart] = useState(false);
+  const [openContactContainer, setOpenContactContainer] = useState(false);
+
+  const handleOpenContact = () => {
+    setOpenContactContainer((prev) => !prev);
+  };
+
 
   useEffect(() => {
     const cartArray = JSON.parse(localStorage.getItem("cartArray")) || [];
@@ -114,11 +124,11 @@ function Index({ handleActiveComponent }) {
                 onClick={() => setIsNotificationsOpen(true)}
               >
                 <NotificationsIcon className={styles.icon} />
-                <h1>News</h1>
+                <h1>Notifications</h1>
               </div>
             </Tooltip>
             <Tooltip title="Contact Us">
-              <div className={styles.link}>
+              <div className={styles.link} onClick={handleOpenContact}>
                 <PhoneIcon className={styles.icon} />
                 <h1>Contact</h1>
               </div>
@@ -355,6 +365,44 @@ function Index({ handleActiveComponent }) {
           <TextField id="filled-basic" label="Phone" variant="filled" />
           <TextField id="filled-basic" label="Location" variant="filled" />
           <Button>Buy</Button>
+        </Box>
+      </Modal>
+
+
+
+      <Modal
+        open={openContactContainer}
+        onClose={handleOpenContact}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className={styles.contactBox}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Contact Support
+          </Typography>
+
+          <div className={styles.contactInfo}>
+            <div className={styles.info}>
+              <Facebook className={styles.icon}/>
+              <h1>facebook acocunt here</h1>
+            </div>
+
+            <div className={styles.info}>
+              <Email className={styles.icon}/>
+              <h1>emailaccount@gmail.com</h1>
+            </div>
+
+            <div className={styles.info}>
+              <WhatsApp className={styles.icon}/>
+              <h1>+233597034532</h1>
+            </div>
+
+            <div className={styles.info}>
+              <Twitter className={styles.icon}/>
+              <h1>twitteraccount here</h1>
+            </div>
+          </div>
+         
         </Box>
       </Modal>
 
