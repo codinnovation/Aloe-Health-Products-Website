@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
-import { ref, onValue } from "firebase/database";
+import { ref, get } from "firebase/database";
 import { db } from "../../../firebase.config";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
-import { NotificationManager, NotificationContainer } from "react-notifications";
+import {
+  NotificationManager,
+  NotificationContainer,
+} from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
 const modalStyle = {
@@ -30,6 +33,11 @@ function AloeDrinks() {
   const [openAddCart, setOpenAddCart] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openProductDescription, setOpenProductDescription] = useState(false);
+
+  const handleOpenProductDes = () => setOpenProductDescription(true);
+  const handleCloseProductDes = () => setOpenProductDescription(false);
 
   const handleOpenAddCart = (product) => {
     setSelectedProduct(product);
@@ -50,15 +58,32 @@ function AloeDrinks() {
   };
 
   useEffect(() => {
-    const productRef = ref(db, "sneakers");
-    onValue(productRef, (snapshot) => {
-      const data = snapshot.val();
-      const productList = [];
-      for (let id in data) {
-        productList.push({ id, ...data[id] });
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const dbRef = ref(db, "sneakers");
+        const response = await get(dbRef);
+        const data = response.val();
+
+        if (data && typeof data === "object") {
+          const dataArray = Object.entries(data).map(([key, value]) => ({
+            key,
+            ...value,
+          }));
+          setProductData(dataArray);
+          setIsLoading(false);
+        } else {
+          setProductData([]);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setProductData([]);
+        setIsLoading(false);
       }
-      setProductData(productList);
-    });
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -68,6 +93,15 @@ function AloeDrinks() {
           <Box sx={{ display: "flex" }}>
             <CircularProgress />
           </Box>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className={styles.loadingContainer}>
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+          <p>Please wait...</p>
         </div>
       )}
       <div className={styles.mainContainer}>
@@ -96,7 +130,7 @@ function AloeDrinks() {
                 <h1>{`Ghc${product.productPrice}`}</h1>
               </div>
               <div className={styles.readMore}>
-                <button>Read More</button>
+                <button onClick={handleOpenProductDes}>Read More</button>
               </div>
             </div>
           </div>
@@ -109,17 +143,59 @@ function AloeDrinks() {
         aria-labelledby="add-to-cart-modal-title"
         aria-describedby="add-to-cart-modal-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={{ ...modalStyle, width: 300 }}>
           <h2 id="add-to-cart-modal-title">Add to cart</h2>
           <p id="add-to-cart-modal-description">
-            Are you sure you want to add this item to your cart and buy later?
+            Are you sure to save this item and buy later?
           </p>
-          <Button onClick={addToCart} variant="contained" color="primary">
-            Add
-          </Button>
-          <Button onClick={handleCloseAddCart} variant="outlined" color="secondary">
-            Close
-          </Button>
+          <Button onClick={addToCart}>Add</Button>
+          <Button onClick={handleCloseAddCart}>Close</Button>
+        </Box>
+      </Modal>
+
+      <Modal
+        keepMounted
+        open={openProductDescription}
+        onClose={handleCloseProductDes}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box className={styles.productDesContainer}>
+          <div className={styles.productDesContainerHeader}>
+            <h1>Product Details</h1>
+            <h1 onClick={handleCloseProductDes}>Close</h1>
+          </div>
+          <div className={styles.productDesTextContainer}>
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesImage}></div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+                necessitatibus, commodi exercitationem atque labore dicta ipsum,
+                error corrupti, accusamus fugiat veniam incidunt.
+              </p>
+            </div>
+
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesImage}></div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+                necessitatibus, commodi exercitationem atque labore dicta ipsum,
+                error corrupti, accusamus fugiat veniam incidunt.
+              </p>
+            </div>
+
+            <div className={styles.productDesText}>
+              <h1>Title Here</h1>
+              <div className={styles.productDesImage}></div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+                necessitatibus, commodi exercitationem atque labore dicta ipsum,
+                error corrupti, accusamus fugiat veniam incidunt.
+              </p>
+            </div>
+          </div>
         </Box>
       </Modal>
 

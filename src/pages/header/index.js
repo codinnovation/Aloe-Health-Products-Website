@@ -51,28 +51,6 @@ function Index({ handleActiveComponent }) {
     setCartItems(cartArray);
   }, []);
 
-  const handleLogout = async () => {
-    setIsButtonClicked(true);
-    try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        toast.success("Logout Successful");
-        router.push("/login");
-      } else {
-        toast.error("Logout Failed");
-      }
-    } catch (error) {
-      toast.error("Error Occurred");
-    } finally {
-      setIsButtonClicked(false);
-    }
-  };
 
   const handleDeleteItem = (itemId) => {
     const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
@@ -246,12 +224,12 @@ function Index({ handleActiveComponent }) {
                       </>
                     }
                   />
-                  <Grid container spacing={1}>
+                  <Grid container spacing={2} style={{marginLeft: "10px"}}>
                     <Grid item>
                       <Button
                         variant="outlined"
                         color="primary"
-                        onClick={() => handleBuyItem(item)}
+                        onClick={() => setSubmitCart(true)}
                       >
                         Buy
                       </Button>
