@@ -1,7 +1,19 @@
 import Head from "next/head";
-import Welcome from './welcome'
+import { useState, useEffect } from "react";
+import Welcome from "./welcome";
+import HomePage from "./home";
 
 export default function Home() {
+  const [showHomePage, setShowHomePage] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowHomePage(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <Head>
@@ -11,7 +23,7 @@ export default function Home() {
         <link rel="icon" href="/logo-2.png" />
       </Head>
       <div>
-        <Welcome />
+        {showHomePage ? <HomePage /> : <Welcome />}
       </div>
     </>
   );

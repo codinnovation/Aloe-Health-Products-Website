@@ -142,13 +142,14 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;
+  padding: 5px;
 }
 
 .productHeader h1 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-family: sans-serif;
   margin-top: 5px;
-  color: green;
+  color: #000;
 }
 
 .productHeader .CartIcon {
@@ -207,7 +208,7 @@
 }
 
 .readMore button {
-  width: 100%;
+  width: 50%;
   height: 40px;
   background-color: green;
   border: none;

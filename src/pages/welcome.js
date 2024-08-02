@@ -7,24 +7,6 @@ function Welcome() {
   const [count, setCount] = useState(0);
   const router = useRouter();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount((prevCount) => {
-        if (prevCount < 100) {
-          return prevCount + 1;
-        } else {
-          clearInterval(interval);
-          setTimeout(() => {
-            router.push("/home"); // Redirect to home page
-          }, 1000); // Delay before redirection
-          return prevCount;
-        }
-      });
-    }, 30); // 100 counts in 3000ms (3 seconds)
-
-    return () => clearInterval(interval);
-  }, [router]);
-
   return (
     <div className={styles.welcomeContainer}>
       <div className={styles.imageContainer}>
